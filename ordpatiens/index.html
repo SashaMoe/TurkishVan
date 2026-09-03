@@ -1,0 +1,1307 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<!--ARTIFACT-START-->
+<title>Ordpatiens</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap">
+<style>
+/* ---------- tokens: light (default) ---------- */
+:root{
+  --ground:#E7EDEA;
+  --panel:#F8FAF9;
+  --table:#DDE6E1;
+  --table-grain:rgba(34,66,58,.032);
+  --ink:#15211E;
+  --ink-2:#4B5D58;
+  --ink-3:#7E8F8A;
+  --line:#C7D3CE;
+  --line-soft:#DAE3DF;
+  --falu:#9B3A2E;
+  --falu-ink:#7E2C21;
+  --falu-wash:#F5E2DD;
+  --spruce:#22423A;
+  --spruce-ink:#1B3630;
+  --spruce-wash:#DEE9E3;
+  --ochre:#A97613;
+  --ochre-wash:#F3E7CC;
+  --good:#2C7355;
+  --bad:#AE3A29;
+  --card-face:#FFFFFF;
+  --card-edge:#C2CFC9;
+  --shadow-1:0 1px 0 rgba(21,33,30,.06), 0 2px 5px rgba(21,33,30,.09);
+  --shadow-2:0 6px 18px rgba(21,33,30,.18);
+  --focus:#A97613;
+  --scrim:rgba(96,120,112,.24);
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#0F1614;
+    --panel:#18211F;
+    --table:#131B19;
+    --table-grain:rgba(190,225,213,.035);
+    --ink:#E7EEEA;
+    --ink-2:#A6B7B1;
+    --ink-3:#77887F;
+    --line:#2A3835;
+    --line-soft:#212D2A;
+    --falu:#D2604A;
+    --falu-ink:#E3826D;
+    --falu-wash:#37201B;
+    --spruce:#7FB79F;
+    --spruce-ink:#9BCBB5;
+    --spruce-wash:#1A2A26;
+    --ochre:#E0A94A;
+    --ochre-wash:#33280F;
+    --good:#5FBF92;
+    --bad:#E0715B;
+    --card-face:#202B28;
+    --card-edge:#31413D;
+    --shadow-1:0 1px 0 rgba(0,0,0,.35), 0 2px 6px rgba(0,0,0,.35);
+    --shadow-2:0 8px 22px rgba(0,0,0,.5);
+    --focus:#E0A94A;
+    --scrim:rgba(4,10,9,.46);
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#0F1614;
+  --panel:#18211F;
+  --table:#131B19;
+  --table-grain:rgba(190,225,213,.035);
+  --ink:#E7EEEA;
+  --ink-2:#A6B7B1;
+  --ink-3:#77887F;
+  --line:#2A3835;
+  --line-soft:#212D2A;
+  --falu:#D2604A;
+  --falu-ink:#E3826D;
+  --falu-wash:#37201B;
+  --spruce:#7FB79F;
+  --spruce-ink:#9BCBB5;
+  --spruce-wash:#1A2A26;
+  --ochre:#E0A94A;
+  --ochre-wash:#33280F;
+  --good:#5FBF92;
+  --bad:#E0715B;
+  --card-face:#202B28;
+  --card-edge:#31413D;
+  --shadow-1:0 1px 0 rgba(0,0,0,.35), 0 2px 6px rgba(0,0,0,.35);
+  --shadow-2:0 8px 22px rgba(0,0,0,.5);
+  --focus:#E0A94A;
+  --scrim:rgba(4,10,9,.46);
+  color-scheme:dark;
+}
+
+/* ---------- base ---------- */
+*{box-sizing:border-box}
+body{
+  margin:0;
+  background:var(--ground);
+  color:var(--ink);
+  font-family:"Familjen Grotesk","Segoe UI",system-ui,-apple-system,sans-serif;
+  font-size:15px;
+  line-height:1.45;
+  -webkit-text-size-adjust:100%;
+  -webkit-tap-highlight-color:transparent;
+}
+button{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--focus);outline-offset:2px;border-radius:4px}
+
+.wrap{max-width:1080px;margin:0 auto;padding:18px 16px 40px}
+@media (max-width:560px){
+  .mark{flex-wrap:wrap;gap:4px 10px}
+  .mark h1{font-size:25px}
+  .mark .sub{font-size:11px}
+  .legend{gap:10px;font-size:12px}
+}
+
+/* ---------- masthead ---------- */
+.masthead{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap;
+  border-bottom:1px solid var(--line);padding-bottom:12px;margin-bottom:16px}
+.mark{display:flex;align-items:baseline;gap:10px}
+.mark h1{font-size:29px;font-weight:700;letter-spacing:-.02em;margin:0;line-height:1}
+.mark .sub{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);font-weight:500}
+.legend{display:flex;gap:14px;font-size:12px;color:var(--ink-2);align-items:center}
+.legend b{font-weight:600}
+.chip{display:inline-flex;align-items:center;gap:6px}
+.swatch{width:10px;height:10px;border-radius:2px;display:inline-block}
+.swatch.sv{background:var(--falu)}
+.swatch.en{background:var(--spruce)}
+
+/* ---------- layout ---------- */
+.board{display:grid;grid-template-columns:minmax(0,1fr) 268px;gap:18px;align-items:start}
+@media (max-width:880px){ .board{grid-template-columns:minmax(0,1fr)} }
+
+/* ---------- scorebar ---------- */
+.scorebar{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;background:var(--line-soft);
+  border:1px solid var(--line);border-radius:8px;overflow:hidden;margin-bottom:12px}
+.stat{background:var(--panel);padding:8px 10px;min-width:0}
+.stat .k{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);font-weight:600}
+.stat .v{font-size:21px;font-weight:600;font-variant-numeric:tabular-nums;letter-spacing:-.01em;line-height:1.2}
+.stat .v small{font-size:12px;color:var(--ink-3);font-weight:500}
+.stat.hot .v{color:var(--ochre)}
+
+/* ---------- table ---------- */
+.table{
+  position:relative;
+  background:
+    repeating-linear-gradient(90deg, var(--table-grain) 0 1px, transparent 1px 7px),
+    repeating-linear-gradient(0deg, var(--table-grain) 0 1px, transparent 1px 7px),
+    var(--table);
+  border:1px solid var(--line);
+  border-radius:10px;
+  padding:16px 12px 12px;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.35);
+}
+.pyramid{position:relative;margin:0 auto;transition:height .25s ease}
+
+/* ---------- cards ---------- */
+.card{
+  position:absolute;
+  width:var(--cw);height:var(--ch);
+  background:var(--card-face);
+  border:1px solid var(--card-edge);
+  border-radius:7px;
+  box-shadow:var(--shadow-1);
+  padding:0;
+  display:flex;flex-direction:column;
+  overflow:hidden;
+  cursor:default;
+  text-align:left;
+  transition:transform .16s ease, box-shadow .16s ease, opacity .22s ease, filter .16s ease;
+  will-change:transform;
+}
+.card .rail{height:4px;flex:none;background:var(--ink-3)}
+.card.sv .rail{background:var(--falu)}
+.card.en .rail{background:var(--spruce)}
+.card .top{display:flex;align-items:center;height:var(--tagh);
+  padding:0 7px;flex:none;font-family:"Source Serif 4",Georgia,serif;
+  font-size:calc(var(--tagh) * .82);font-style:italic;font-weight:400;letter-spacing:.02em}
+.card.sv .top{color:var(--falu)}
+.card.en .top{color:var(--spruce)}
+.card .word{
+  flex:none;height:var(--wordh);display:flex;align-items:center;padding:0 7px;
+  font-family:"Source Serif 4",Georgia,serif;
+  font-weight:600;line-height:1.08;color:var(--ink);
+  overflow:hidden;
+}
+.card .word span{display:block}
+.card .foot{flex:1;display:flex;align-items:flex-end;justify-content:flex-end;padding:0 6px 3px;
+  font-size:calc(var(--tagh) * .66);color:var(--ink-3);white-space:nowrap;overflow:hidden;
+  font-weight:600;letter-spacing:.08em;text-transform:uppercase;opacity:.7}
+.compact .card .foot{display:none}
+
+.card::before{content:"";position:absolute;inset:0;z-index:2;pointer-events:none;
+  background:transparent;transition:background .18s ease}
+.card.covered::before{background:var(--scrim)}
+.card.covered .foot{visibility:hidden}
+.card.free{cursor:pointer}
+.card.free:hover{transform:translateY(-3px);box-shadow:var(--shadow-2)}
+.card.sel{transform:translateY(-7px);box-shadow:var(--shadow-2);border-color:var(--ochre)}
+.card.sel::after{content:"";position:absolute;inset:0;border-radius:6px;box-shadow:inset 0 0 0 2px var(--ochre)}
+.card.hint{animation:nudge 1.1s ease-in-out 3}
+.card.wrong{animation:shake .38s ease}
+.card.gone{opacity:0;transform:scale(.86) translateY(-14px);pointer-events:none}
+.card.peek .word{color:var(--ochre)}
+
+@keyframes nudge{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+@keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-6px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(3px)}}
+@media (prefers-reduced-motion: reduce){
+  .card,.card.hint,.card.wrong{animation:none!important;transition:opacity .15s linear}
+  .card.free:hover{transform:none}
+}
+
+/* ---------- piles ---------- */
+.piles{display:flex;align-items:center;gap:14px;margin-top:18px;padding-top:14px;border-top:1px dashed var(--line);flex-wrap:wrap}
+.pile{display:flex;flex-direction:column;gap:5px;align-items:center}
+.pile .lab{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);font-weight:600}
+.slot{position:relative;width:var(--cw);height:var(--ch)}
+.slot .card{position:absolute;inset:0;width:auto;height:auto}
+.empty{position:absolute;inset:0;border:1px dashed var(--line);border-radius:7px}
+.back{
+  position:absolute;inset:0;border-radius:7px;border:1px solid var(--falu-ink);cursor:pointer;
+  background:
+    repeating-linear-gradient(45deg, rgba(255,255,255,.10) 0 4px, transparent 4px 8px),
+    repeating-linear-gradient(-45deg, rgba(0,0,0,.10) 0 4px, transparent 4px 8px),
+    var(--falu);
+  box-shadow:var(--shadow-1);
+  display:flex;align-items:center;justify-content:center;
+  color:#F6E9E5;font-weight:700;font-size:12px;letter-spacing:.1em;
+  transition:transform .16s ease;
+}
+.back:hover{transform:translateY(-3px)}
+.back .n{background:rgba(0,0,0,.28);padding:2px 7px;border-radius:20px;font-variant-numeric:tabular-nums}
+.recycle{border-style:dashed;background:transparent;color:var(--ink-2);border-color:var(--line)}
+.recycle:hover{color:var(--ink)}
+.piles .msg{flex:1;min-width:160px;font-size:13px;color:var(--ink-2);align-self:flex-end;padding-bottom:6px}
+.piles .msg b{color:var(--ink);font-weight:600}
+
+/* ---------- controls ---------- */
+.controls{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0 0}
+.btn{
+  background:var(--panel);border:1px solid var(--line);border-radius:7px;
+  padding:7px 12px;font-size:13px;font-weight:500;cursor:pointer;
+  display:inline-flex;align-items:center;gap:7px;transition:border-color .15s ease,background .15s ease;
+}
+.btn:hover{border-color:var(--ink-3)}
+.btn:disabled{opacity:.42;cursor:not-allowed}
+.btn .cost{font-size:11px;color:var(--ink-3);font-variant-numeric:tabular-nums}
+.btn.primary{background:var(--falu);border-color:var(--falu);color:#FBF1EE}
+.btn.primary:hover{filter:brightness(1.06)}
+.btn.on{background:var(--ochre-wash);border-color:var(--ochre)}
+select.btn{padding-right:8px}
+
+/* ---------- rail ---------- */
+.rail{display:flex;flex-direction:column;gap:12px}
+.card-panel{background:var(--panel);border:1px solid var(--line);border-radius:9px;padding:12px}
+.card-panel h2{margin:0 0 8px;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);font-weight:600;
+  display:flex;justify-content:space-between;align-items:baseline}
+.card-panel h2 em{font-style:normal;color:var(--ink-2);letter-spacing:0;text-transform:none;font-size:12px}
+.wordlist{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:1px;max-height:340px;overflow-y:auto}
+.wordlist li{display:flex;align-items:baseline;gap:8px;padding:5px 0;border-bottom:1px solid var(--line-soft);font-size:13px}
+.wordlist li:last-child{border-bottom:0}
+.wordlist .sv{font-family:"Source Serif 4",Georgia,serif;font-weight:600;color:var(--falu-ink)}
+.wordlist .en{color:var(--ink-2);flex:1;min-width:0}
+.wordlist .say{background:none;border:0;cursor:pointer;color:var(--ink-3);padding:0 2px;font-size:13px}
+.wordlist .say:hover{color:var(--falu)}
+.wordlist .none{color:var(--ink-3);font-size:13px;padding:4px 0;border:0}
+.howto{font-size:12.5px;color:var(--ink-2);line-height:1.5}
+.howto p{margin:0 0 7px}
+.howto p:last-child{margin:0}
+.howto b{color:var(--ink);font-weight:600}
+.kbd{font-family:"Source Serif 4",Georgia,serif;color:var(--falu-ink);font-weight:600}
+
+/* ---------- overlay ---------- */
+.overlay{position:fixed;inset:0;background:rgba(15,22,20,.55);backdrop-filter:blur(3px);
+  display:flex;align-items:center;justify-content:center;padding:20px;z-index:40}
+.overlay[hidden]{display:none}
+.sheet{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:22px;max-width:440px;width:100%;
+  box-shadow:var(--shadow-2);max-height:88vh;overflow-y:auto}
+.sheet h2{margin:0 0 2px;font-size:24px;letter-spacing:-.02em}
+.sheet .lede{margin:0 0 16px;color:var(--ink-2);font-size:14px}
+.finals{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line-soft);border:1px solid var(--line);
+  border-radius:8px;overflow:hidden;margin-bottom:16px}
+.finals div{background:var(--panel);padding:9px 10px}
+.finals .k{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);font-weight:600}
+.finals .v{font-size:19px;font-weight:600;font-variant-numeric:tabular-nums}
+.recap{max-height:220px;overflow-y:auto;margin-bottom:16px}
+.sheet .row{display:flex;gap:8px}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <header class="masthead">
+    <div class="mark">
+      <h1>Ordpatiens</h1>
+      <span class="sub">Swedish word solitaire &middot; A1&ndash;A2</span>
+    </div>
+    <div class="legend">
+      <span class="chip"><i class="swatch sv"></i> <b>Svenska</b></span>
+      <span class="chip"><i class="swatch en"></i> <b>English</b></span>
+      <span class="chip">Clear the pyramid by pairing each word with its translation.</span>
+    </div>
+  </header>
+
+  <div class="board">
+
+    <main>
+      <div class="scorebar">
+        <div class="stat"><div class="k">Poäng &middot; Score</div><div class="v" id="s-score">0</div></div>
+        <div class="stat" id="streakbox"><div class="k">Svit &middot; Streak</div><div class="v" id="s-streak">0</div></div>
+        <div class="stat"><div class="k">Kvar &middot; Left</div><div class="v" id="s-left">0</div></div>
+        <div class="stat"><div class="k">Tid &middot; Time</div><div class="v" id="s-time">0:00</div></div>
+      </div>
+
+      <section class="table">
+        <div class="pyramid" id="pyramid"></div>
+
+        <div class="piles">
+          <div class="pile">
+            <span class="lab">Talong &middot; Stock</span>
+            <div class="slot" id="stock"></div>
+          </div>
+          <div class="pile">
+            <span class="lab">Öppen &middot; Waste</span>
+            <div class="slot" id="waste"><div class="empty"></div></div>
+          </div>
+          <p class="msg" id="msg">Tap a card, then tap its translation.</p>
+        </div>
+      </section>
+
+      <div class="controls">
+        <button class="btn primary" id="b-new">New deal</button>
+        <button class="btn" id="b-undo">Undo</button>
+        <button class="btn" id="b-hint">Hint <span class="cost">&minus;50</span></button>
+        <button class="btn" id="b-sound" aria-pressed="true">🔊 Uttal</button>
+        <select class="btn" id="b-theme" aria-label="Word theme">
+          <option value="all">All words</option>
+          <option value="basics">Everyday &amp; phrases</option>
+          <option value="food">Food &amp; home</option>
+          <option value="people">People &amp; body</option>
+          <option value="nature">Nature &amp; animals</option>
+          <option value="town">Town &amp; travel</option>
+          <option value="verbs">Verbs</option>
+          <option value="adj">Adjectives</option>
+        </select>
+      </div>
+    </main>
+
+    <aside class="rail">
+      <div class="card-panel">
+        <h2>Ordlista <em id="wl-count">0</em></h2>
+        <ul class="wordlist" id="wordlist"><li class="none">Matched pairs collect here.</li></ul>
+      </div>
+      <div class="card-panel howto">
+        <h2>Så spelar du</h2>
+        <p><b>Free cards</b> are the ones nothing lies on top of &mdash; plus the face-up waste card.</p>
+        <p>Tap a free card, then tap the card that <b>translates</b> it. A right pair leaves the table; a wrong one costs you the streak.</p>
+        <p><b>Stock</b> deals a new face-up word. Turn it over as often as you like &mdash; every deal can be cleared, but each reshuffle costs 30.</p>
+        <p><b>Hint</b> with a card selected reveals its translation; with nothing selected it points at a pair.</p>
+        <p>Corner marks are the word class: <span class="kbd">en</span> / <span class="kbd">ett</span> nouns, <span class="kbd">att</span> verbs, <span class="kbd">adj</span>, <span class="kbd">fras</span>.</p>
+      </div>
+    </aside>
+
+  </div>
+</div>
+
+<div class="overlay" id="overlay" hidden>
+  <div class="sheet">
+    <h2 id="ov-title">Grattis!</h2>
+    <p class="lede" id="ov-lede">You cleared the pyramid.</p>
+    <div class="finals">
+      <div><div class="k">Poäng</div><div class="v" id="ov-score">0</div></div>
+      <div><div class="k">Tid</div><div class="v" id="ov-time">0:00</div></div>
+      <div><div class="k">Bästa svit</div><div class="v" id="ov-streak">0</div></div>
+    </div>
+    <h2 style="font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3)">Orden du klarade</h2>
+    <ul class="wordlist recap" id="ov-list"></ul>
+    <div class="row">
+      <button class="btn primary" id="ov-again">Deal again</button>
+      <button class="btn" id="ov-close">Look at the table</button>
+    </div>
+  </div>
+</div>
+
+<script>
+"use strict";
+
+/* ------------------------------------------------------------------
+   Word bank — [swedish, english, class, gender, theme]
+   class:  n = noun, v = verb, a = adjective, p = phrase / other
+   gender: "en" / "ett" for nouns, "" otherwise
+------------------------------------------------------------------- */
+const BANK = [
+/* --- basics: greetings, time, colour, number --- */
+["hej","hello","p","","basics"],
+["hejdå","goodbye","p","","basics"],
+["tack","thank you","p","","basics"],
+["varsågod","you're welcome","p","","basics"],
+["förlåt","sorry","p","","basics"],
+["ursäkta","excuse me","p","","basics"],
+["snälla","please","p","","basics"],
+["ja","yes","p","","basics"],
+["nej","no","p","","basics"],
+["kanske","maybe","p","","basics"],
+["välkommen","welcome","p","","basics"],
+["grattis","congratulations","p","","basics"],
+["vi ses","see you","p","","basics"],
+["lycka till","good luck","p","","basics"],
+["dag","day","n","en","basics"],
+["natt","night","n","en","basics"],
+["morgon","morning","n","en","basics"],
+["kväll","evening","n","en","basics"],
+["vecka","week","n","en","basics"],
+["månad","month","n","en","basics"],
+["år","year","n","ett","basics"],
+["timme","hour","n","en","basics"],
+["minut","minute","n","en","basics"],
+["klocka","clock","n","en","basics"],
+["helg","weekend","n","en","basics"],
+["idag","today","p","","basics"],
+["imorgon","tomorrow","p","","basics"],
+["igår","yesterday","p","","basics"],
+["nu","now","p","","basics"],
+["alltid","always","p","","basics"],
+["aldrig","never","p","","basics"],
+["ofta","often","p","","basics"],
+["ibland","sometimes","p","","basics"],
+["måndag","Monday","n","en","basics"],
+["fredag","Friday","n","en","basics"],
+["lördag","Saturday","n","en","basics"],
+["söndag","Sunday","n","en","basics"],
+["sommar","summer","n","en","basics"],
+["vinter","winter","n","en","basics"],
+["höst","autumn","n","en","basics"],
+["vår","spring","n","en","basics"],
+["röd","red","a","","basics"],
+["blå","blue","a","","basics"],
+["grön","green","a","","basics"],
+["gul","yellow","a","","basics"],
+["svart","black","a","","basics"],
+["vit","white","a","","basics"],
+["brun","brown","a","","basics"],
+["grå","grey","a","","basics"],
+["rosa","pink","a","","basics"],
+["lila","purple","a","","basics"],
+["två","two","p","","basics"],
+["tre","three","p","","basics"],
+["fyra","four","p","","basics"],
+["fem","five","p","","basics"],
+["sju","seven","p","","basics"],
+["åtta","eight","p","","basics"],
+["nio","nine","p","","basics"],
+["tio","ten","p","","basics"],
+["hundra","hundred","p","","basics"],
+["första","first","p","","basics"],
+
+/* --- food, drink, home, clothes --- */
+["bröd","bread","n","ett","food"],
+["mjölk","milk","n","en","food"],
+["ost","cheese","n","en","food"],
+["smör","butter","n","ett","food"],
+["ägg","egg","n","ett","food"],
+["kött","meat","n","ett","food"],
+["fisk","fish","n","en","food"],
+["kyckling","chicken","n","en","food"],
+["potatis","potato","n","en","food"],
+["grönsak","vegetable","n","en","food"],
+["frukt","fruit","n","en","food"],
+["äpple","apple","n","ett","food"],
+["banan","banana","n","en","food"],
+["apelsin","orange","n","en","food"],
+["jordgubbe","strawberry","n","en","food"],
+["kaffe","coffee","n","ett","food"],
+["te","tea","n","ett","food"],
+["vatten","water","n","ett","food"],
+["öl","beer","n","en","food"],
+["vin","wine","n","ett","food"],
+["socker","sugar","n","ett","food"],
+["soppa","soup","n","en","food"],
+["sallad","salad","n","en","food"],
+["glass","ice cream","n","en","food"],
+["kaka","cake","n","en","food"],
+["bulle","bun","n","en","food"],
+["frukost","breakfast","n","en","food"],
+["middag","dinner","n","en","food"],
+["mat","food","n","en","food"],
+["hus","house","n","ett","food"],
+["lägenhet","apartment","n","en","food"],
+["rum","room","n","ett","food"],
+["kök","kitchen","n","ett","food"],
+["badrum","bathroom","n","ett","food"],
+["sovrum","bedroom","n","ett","food"],
+["dörr","door","n","en","food"],
+["fönster","window","n","ett","food"],
+["bord","table","n","ett","food"],
+["stol","chair","n","en","food"],
+["säng","bed","n","en","food"],
+["soffa","sofa","n","en","food"],
+["lampa","lamp","n","en","food"],
+["golv","floor","n","ett","food"],
+["vägg","wall","n","en","food"],
+["nyckel","key","n","en","food"],
+["spis","stove","n","en","food"],
+["kylskåp","fridge","n","ett","food"],
+["trädgård","garden","n","en","food"],
+["trappa","stairs","n","en","food"],
+["tröja","sweater","n","en","food"],
+["byxor","trousers","n","","food"],
+["skjorta","shirt","n","en","food"],
+["klänning","dress","n","en","food"],
+["jacka","jacket","n","en","food"],
+["sko","shoe","n","en","food"],
+["strumpa","sock","n","en","food"],
+["mössa","hat","n","en","food"],
+["halsduk","scarf","n","en","food"],
+["vante","mitten","n","en","food"],
+["kläder","clothes","n","","food"],
+
+/* --- people & body --- */
+["familj","family","n","en","people"],
+["mamma","mum","n","en","people"],
+["pappa","dad","n","en","people"],
+["syster","sister","n","en","people"],
+["bror","brother","n","en","people"],
+["barn","child","n","ett","people"],
+["flicka","girl","n","en","people"],
+["pojke","boy","n","en","people"],
+["kvinna","woman","n","en","people"],
+["vän","friend","n","en","people"],
+["granne","neighbour","n","en","people"],
+["farmor","grandmother","n","en","people"],
+["morfar","grandfather","n","en","people"],
+["dotter","daughter","n","en","people"],
+["fru","wife","n","en","people"],
+["make","husband","n","en","people"],
+["människa","human","n","en","people"],
+["lärare","teacher","n","en","people"],
+["läkare","doctor","n","en","people"],
+["huvud","head","n","ett","people"],
+["fot","foot","n","en","people"],
+["öga","eye","n","ett","people"],
+["öra","ear","n","ett","people"],
+["mun","mouth","n","en","people"],
+["näsa","nose","n","en","people"],
+["hår","hair","n","ett","people"],
+["ben","leg","n","ett","people"],
+["rygg","back","n","en","people"],
+["mage","stomach","n","en","people"],
+["tand","tooth","n","en","people"],
+["hjärta","heart","n","ett","people"],
+["feber","fever","n","en","people"],
+["medicin","medicine","n","en","people"],
+["apotek","pharmacy","n","ett","people"],
+["sjuk","ill","a","","people"],
+["frisk","healthy","a","","people"],
+
+/* --- nature & animals --- */
+["väder","weather","n","ett","nature"],
+["sol","sun","n","en","nature"],
+["regn","rain","n","ett","nature"],
+["snö","snow","n","en","nature"],
+["vind","wind","n","en","nature"],
+["moln","cloud","n","ett","nature"],
+["himmel","sky","n","en","nature"],
+["träd","tree","n","ett","nature"],
+["blomma","flower","n","en","nature"],
+["skog","forest","n","en","nature"],
+["sjö","lake","n","en","nature"],
+["hav","sea","n","ett","nature"],
+["berg","mountain","n","ett","nature"],
+["gräs","grass","n","ett","nature"],
+["stjärna","star","n","en","nature"],
+["måne","moon","n","en","nature"],
+["is","ice","n","en","nature"],
+["eld","fire","n","en","nature"],
+["luft","air","n","en","nature"],
+["hund","dog","n","en","nature"],
+["katt","cat","n","en","nature"],
+["häst","horse","n","en","nature"],
+["fågel","bird","n","en","nature"],
+["ko","cow","n","en","nature"],
+["gris","pig","n","en","nature"],
+["får","sheep","n","ett","nature"],
+["älg","moose","n","en","nature"],
+["räv","fox","n","en","nature"],
+["björn","bear","n","en","nature"],
+["mus","mouse","n","en","nature"],
+["kanin","rabbit","n","en","nature"],
+["ekorre","squirrel","n","en","nature"],
+
+/* --- town & travel --- */
+["stad","city","n","en","town"],
+["gata","street","n","en","town"],
+["torg","square","n","ett","town"],
+["affär","shop","n","en","town"],
+["bibliotek","library","n","ett","town"],
+["skola","school","n","en","town"],
+["sjukhus","hospital","n","ett","town"],
+["restaurang","restaurant","n","en","town"],
+["kyrka","church","n","en","town"],
+["tåg","train","n","ett","town"],
+["buss","bus","n","en","town"],
+["bil","car","n","en","town"],
+["cykel","bicycle","n","en","town"],
+["flygplan","aeroplane","n","ett","town"],
+["båt","boat","n","en","town"],
+["biljett","ticket","n","en","town"],
+["väg","road","n","en","town"],
+["bro","bridge","n","en","town"],
+["hotell","hotel","n","ett","town"],
+["resa","trip","n","en","town"],
+["karta","map","n","en","town"],
+["pengar","money","n","","town"],
+["jobb","job","n","ett","town"],
+["kontor","office","n","ett","town"],
+["post","mail","n","en","town"],
+["telefon","telephone","n","en","town"],
+
+/* --- verbs --- */
+["vara","to be","v","","verbs"],
+["ha","to have","v","","verbs"],
+["göra","to do","v","","verbs"],
+["gå","to walk","v","","verbs"],
+["springa","to run","v","","verbs"],
+["äta","to eat","v","","verbs"],
+["dricka","to drink","v","","verbs"],
+["sova","to sleep","v","","verbs"],
+["läsa","to read","v","","verbs"],
+["skriva","to write","v","","verbs"],
+["prata","to talk","v","","verbs"],
+["säga","to say","v","","verbs"],
+["höra","to hear","v","","verbs"],
+["se","to see","v","","verbs"],
+["titta","to look","v","","verbs"],
+["komma","to come","v","","verbs"],
+["köpa","to buy","v","","verbs"],
+["betala","to pay","v","","verbs"],
+["arbeta","to work","v","","verbs"],
+["bo","to live","v","","verbs"],
+["gilla","to like","v","","verbs"],
+["älska","to love","v","","verbs"],
+["förstå","to understand","v","","verbs"],
+["veta","to know","v","","verbs"],
+["lära sig","to learn","v","","verbs"],
+["hjälpa","to help","v","","verbs"],
+["öppna","to open","v","","verbs"],
+["stänga","to close","v","","verbs"],
+["vänta","to wait","v","","verbs"],
+["fråga","to ask","v","","verbs"],
+["svara","to answer","v","","verbs"],
+["ta","to take","v","","verbs"],
+["ge","to give","v","","verbs"],
+["glömma","to forget","v","","verbs"],
+["minnas","to remember","v","","verbs"],
+["börja","to begin","v","","verbs"],
+["sluta","to stop","v","","verbs"],
+["städa","to clean","v","","verbs"],
+["handla","to shop","v","","verbs"],
+["skratta","to laugh","v","","verbs"],
+["gråta","to cry","v","","verbs"],
+["sjunga","to sing","v","","verbs"],
+["dansa","to dance","v","","verbs"],
+["spela","to play","v","","verbs"],
+["simma","to swim","v","","verbs"],
+["stå","to stand","v","","verbs"],
+["sitta","to sit","v","","verbs"],
+["tro","to believe","v","","verbs"],
+["behöva","to need","v","","verbs"],
+["vilja","to want","v","","verbs"],
+["tänka","to think","v","","verbs"],
+["laga","to repair","v","","verbs"],
+["tvätta","to wash","v","","verbs"],
+["resa sig","to stand up","v","","verbs"],
+
+/* --- adjectives --- */
+["stor","big","a","","adj"],
+["liten","small","a","","adj"],
+["gammal","old","a","","adj"],
+["ung","young","a","","adj"],
+["ny","new","a","","adj"],
+["bra","good","a","","adj"],
+["dålig","bad","a","","adj"],
+["lätt","easy","a","","adj"],
+["svår","difficult","a","","adj"],
+["lång","long","a","","adj"],
+["kort","short","a","","adj"],
+["varm","warm","a","","adj"],
+["kall","cold","a","","adj"],
+["snabb","fast","a","","adj"],
+["långsam","slow","a","","adj"],
+["glad","happy","a","","adj"],
+["ledsen","sad","a","","adj"],
+["trött","tired","a","","adj"],
+["hungrig","hungry","a","","adj"],
+["törstig","thirsty","a","","adj"],
+["vacker","beautiful","a","","adj"],
+["ful","ugly","a","","adj"],
+["dyr","expensive","a","","adj"],
+["billig","cheap","a","","adj"],
+["ren","clean","a","","adj"],
+["smutsig","dirty","a","","adj"],
+["rolig","fun","a","","adj"],
+["tråkig","boring","a","","adj"],
+["stark","strong","a","","adj"],
+["svag","weak","a","","adj"],
+["tom","empty","a","","adj"],
+["rätt","correct","a","","adj"],
+["fel","wrong","a","","adj"],
+["viktig","important","a","","adj"],
+["konstig","strange","a","","adj"],
+["snäll","kind","a","","adj"],
+["arg","angry","a","","adj"],
+["rädd","afraid","a","","adj"],
+["nära","near","a","","adj"]
+];
+
+const THEMES = {
+  all:    null,
+  basics: ["basics"],
+  food:   ["food"],
+  people: ["people"],
+  nature: ["nature"],
+  town:   ["town"],
+  verbs:  ["verbs"],
+  adj:    ["adj"]
+};
+
+/* ------------------------------------------------------------------
+   Pyramid geometry.  Slot index = r*(r+1)/2 + c, row r holds r+1 cards,
+   and the card at (r,c) is covered by (r+1,c) and (r+1,c+1).
+------------------------------------------------------------------- */
+const idx  = (r,c) => r*(r+1)/2 + c;
+const rowOf = i => { let r = 0; while (idx(r+1,0) <= i) r++; return r; };
+const colOf = i => i - idx(rowOf(i),0);
+
+/* p lies above q, so q must be cleared before p can be reached */
+function above(p,q){
+  const pr = rowOf(p), pc = colOf(p), qr = rowOf(q), qc = colOf(q);
+  return qr > pr && qc >= pc && qc <= pc + (qr - pr);
+}
+
+const rand  = n => Math.floor(Math.random()*n);
+const shuffle = a => { for (let i=a.length-1;i>0;i--){ const j=rand(i+1); [a[i],a[j]]=[a[j],a[i]]; } return a; };
+
+/* ------------------------------------------------------------------
+   The deal.  Every deal this builds can be cleared:
+   - most pyramid cards have their partner in the stock, which recycles
+     for ever, so they can always be matched once uncovered;
+   - the few pairs sitting entirely inside the pyramid are placed so
+     that no pair blocks another in a cycle (checked below).
+------------------------------------------------------------------- */
+function placePairs(N, k){
+  for (let attempt = 0; attempt < 200; attempt++){
+    const free = shuffle([...Array(N).keys()]);
+    const pairs = [], loose = [];
+    while (free.length > 1 && pairs.length < k){
+      const a = free.shift();
+      const j = free.findIndex(b => !above(a,b) && !above(b,a));
+      if (j === -1){ loose.push(a); continue; }
+      pairs.push([a, free.splice(j,1)[0]]);
+    }
+    if (pairs.length < k) continue;
+    if (acyclic(pairs)) return { pairs, rest: free.concat(loose) };
+  }
+  return null;
+}
+
+/* pair P depends on pair Q when a card of Q lies on top of a card of P */
+function acyclic(pairs){
+  const n = pairs.length;
+  const dep = pairs.map(P => {
+    const out = [];
+    for (let q = 0; q < n; q++){
+      const Q = pairs[q];
+      if (P.some(a => Q.some(b => above(a,b)))) out.push(q);
+    }
+    return out;
+  });
+  const mark = new Array(n).fill(0);           /* 0 new, 1 open, 2 done */
+  const walk = v => {
+    if (mark[v] === 1) return false;
+    if (mark[v] === 2) return true;
+    mark[v] = 1;
+    for (const w of dep[v]) if (!walk(w)) return false;
+    mark[v] = 2;
+    return true;
+  };
+  for (let v = 0; v < n; v++) if (!walk(v)) return false;
+  return true;
+}
+
+function pickWords(themeKey, need){
+  const cats = THEMES[themeKey];
+  let pool = cats ? BANK.filter(w => cats.includes(w[4])) : BANK.slice();
+  if (pool.length < need) pool = BANK.slice();
+  shuffle(pool);
+  const out = [], seenSv = new Set(), seenEn = new Set();
+  const scan = list => { for (const w of list){
+    if (seenSv.has(w[0]) || seenEn.has(w[1])) continue;
+    seenSv.add(w[0]); seenEn.add(w[1]);
+    out.push(w);
+    if (out.length === need) return;
+  } };
+  scan(pool);
+  if (out.length < need) scan(shuffle(BANK.slice()));
+  return out;
+}
+
+const SV_TAG = w => w[2] === 'n' ? (w[3] || 'pl') : w[2] === 'v' ? 'att' : w[2] === 'a' ? 'adj' : 'fras';
+const EN_TAG = w => w[2] === 'n' ? 'n.'  : w[2] === 'v' ? 'v.'  : w[2] === 'a' ? 'adj.' : 'ph.';
+
+let cardSeq = 0;
+const mkCard = (w, pid, lang) => ({
+  id: 'c' + (++cardSeq),
+  pid, lang,
+  text: lang === 'sv' ? w[0] : w[1],
+  tag:  lang === 'sv' ? SV_TAG(w) : EN_TAG(w),
+  sv: w[0], en: w[1]
+});
+
+/* ------------------------------------------------------------------ */
+let S = null;
+
+function newDeal(){
+  const rows = window.innerWidth < 620 ? 5 : 6;
+  const N    = rows*(rows+1)/2;
+  const k    = rows >= 6 ? 4 : 3;            /* pairs living inside the pyramid */
+  const singles = N - 2*k;
+
+  let plan = null, kk = k;
+  while (!plan && kk >= 0) plan = placePairs(N, kk--);
+
+  const need  = plan.pairs.length + plan.rest.length;
+  const words = pickWords($('b-theme').value, need);
+  const board = new Array(N).fill(null);
+  const stock = [];
+  let p = 0;
+
+  plan.pairs.forEach(([a,b]) => {
+    const w = words[p];
+    const svFirst = Math.random() < 0.5;
+    board[a] = mkCard(w, p, svFirst ? 'sv' : 'en');
+    board[b] = mkCard(w, p, svFirst ? 'en' : 'sv');
+    p++;
+  });
+  plan.rest.forEach(pos => {
+    const w = words[p];
+    const onTable = Math.random() < 0.5 ? 'sv' : 'en';
+    board[pos] = mkCard(w, p, onTable);
+    stock.push(mkCard(w, p, onTable === 'sv' ? 'en' : 'sv'));
+    p++;
+  });
+
+  S = {
+    rows, N, board, stock: shuffle(stock), waste: [], words,
+    sel: null, score: 0, streak: 0, best: 0, matched: [],
+    recycles: 0, hints: 0, wrongs: 0, over: false,
+    started: null, elapsed: 0,
+    sound: S ? S.sound : true,
+    history: []
+  };
+
+  buildBoard();
+  layout();
+  paint();
+  renderWordlist();
+  say('Tap a card, then tap its translation.');
+  $('overlay').hidden = true;
+}
+
+/* ------------------------------------------------------------------
+   Rules
+------------------------------------------------------------------- */
+const childrenOf = i => {
+  const r = rowOf(i), c = colOf(i);
+  return r === S.rows - 1 ? [] : [idx(r+1,c), idx(r+1,c+1)];
+};
+const isFree = i => !!S.board[i] && childrenOf(i).every(j => !S.board[j]);
+const matches = (a,b) => a && b && a.pid === b.pid && a.lang !== b.lang;
+const wasteTop = () => S.waste[S.waste.length - 1] || null;
+const left = () => S.board.filter(Boolean).length;
+
+/* ------------------------------------------------------------------
+   Rendering
+------------------------------------------------------------------- */
+const $ = id => document.getElementById(id);
+const els = {};
+
+function cardHTML(card){
+  return '<span class="rail"></span>' +
+         '<span class="top"><span class="cls">' + card.tag + '</span></span>' +
+         '<span class="word"><span>' + esc(card.text) + '</span></span>' +
+         '<span class="foot">' + (card.lang === 'sv' ? 'svenska' : 'english') + '</span>';
+}
+function esc(s){ return s.replace(/[&<>]/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[ch])); }
+
+function buildBoard(){
+  const py = $('pyramid');
+  py.innerHTML = '';
+  els.slots = [];
+  for (let i = 0; i < S.N; i++){
+    const c = S.board[i];
+    const b = document.createElement('button');
+    b.className = 'card ' + c.lang;
+    b.type = 'button';
+    b.dataset.i = i;
+    b.innerHTML = cardHTML(c);
+    b.addEventListener('click', () => tapPyramid(i));
+    py.appendChild(b);
+    els.slots.push(b);
+  }
+}
+
+function layout(){
+  if (!S) return;
+  const table = document.querySelector('.table');
+  const avail = table.clientWidth - 26;
+  const cols  = S.rows;
+  let step = Math.min(Math.floor(avail / cols), 118);
+  let cw   = Math.max(step - 6, 54);
+
+  /* A covered card only shows the strip above the next row, so size the card
+     from that strip: rail + class tag + two lines of word.  Nothing readable
+     ever falls under the row below. */
+  const fs    = Math.max(10, Math.min(cw * 0.215, 19));
+  const tagH  = Math.round(Math.max(11, fs * 0.66));
+  const wordH = Math.round(2 * fs * 1.08);
+  const band  = 4 + tagH + wordH + 4;
+  const ch    = band + Math.round(fs * 0.95) + 5;
+  const rs    = band;
+
+  const root = document.documentElement.style;
+  root.setProperty('--cw', cw + 'px');
+  root.setProperty('--ch', ch + 'px');
+  root.setProperty('--tagh', tagH + 'px');
+  root.setProperty('--wordh', wordH + 'px');
+
+  const py = $('pyramid');
+  document.querySelector('.table').classList.toggle('compact', cw < 82);
+  py.style.width  = (cols * step) + 'px';
+  py.style.height = ((S.rows - 1) * rs + ch) + 'px';
+
+  els.slots.forEach((el, i) => {
+    const r = rowOf(i), c = colOf(i);
+    el.style.left = (((cols - (r+1)) * step) / 2 + c * step) + 'px';
+    el.style.top  = (r * rs) + 'px';
+    fitWord(el, cw);
+  });
+  document.querySelectorAll('#waste .card, #stock .card').forEach(el => fitWord(el, cw));
+}
+
+let meas = null;
+function advance(text, f){
+  if (!meas){
+    meas = document.createElement('span');
+    meas.style.cssText = 'position:absolute;left:-9999px;top:0;visibility:hidden;white-space:pre;' +
+      'font-family:\"Source Serif 4\",Georgia,serif;font-weight:600;';
+    document.body.appendChild(meas);
+  }
+  meas.style.fontSize = f + 'px';
+  meas.textContent = text;
+  return meas.offsetWidth;
+}
+
+/* Shrink until the longest single word sits on one line and the whole
+   phrase fits the two lines the card shows.  No "gamma / l" breaks. */
+function fitWord(el, cw){
+  const span = el.querySelector('.word span');
+  if (!span) return;
+  const text    = span.textContent;
+  const longest = text.split(/\s+/).reduce((a,b) => b.length > a.length ? b : a, '');
+  const maxW    = cw - 15;
+  let f = Math.max(10, Math.min(cw * 0.215, 19));
+  while (f > 8   && advance(longest, f) > maxW)        f -= 0.4;
+  while (f > 7.5 && advance(text,    f) > maxW * 1.85) f -= 0.4;
+  span.parentElement.style.fontSize = f.toFixed(1) + 'px';
+}
+
+function paint(){
+  els.slots.forEach((el, i) => {
+    const c = S.board[i];
+    el.classList.toggle('gone', !c);
+    const free = !!c && isFree(i);
+    el.classList.toggle('free', free);
+    el.classList.toggle('covered', !!c && !free);
+    el.classList.toggle('sel', !!S.sel && S.sel.zone === 'p' && S.sel.i === i);
+    el.disabled = !c;
+  });
+
+  /* stock */
+  const st = $('stock');
+  if (S.stock.length){
+    st.innerHTML = '<button class="back" type="button"><span class="n">' + S.stock.length + '</span></button>';
+    st.firstChild.addEventListener('click', drawStock);
+  } else if (S.waste.length){
+    st.innerHTML = '<button class="back recycle" type="button">↻ vänd</button>';
+    st.firstChild.addEventListener('click', recycle);
+  } else {
+    st.innerHTML = '<div class="empty"></div>';
+  }
+
+  /* waste */
+  const w  = $('waste');
+  const top = wasteTop();
+  if (top){
+    const b = document.createElement('button');
+    b.className = 'card free ' + top.lang;
+    b.type = 'button';
+    b.innerHTML = cardHTML(top);
+    b.addEventListener('click', tapWaste);
+    if (S.sel && S.sel.zone === 'w') b.classList.add('sel');
+    w.innerHTML = '';
+    w.appendChild(b);
+    fitWord(b, parseInt(getComputedStyle(document.documentElement).getPropertyValue('--cw')) || 90);
+  } else {
+    w.innerHTML = '<div class="empty"></div>';
+  }
+
+  $('s-score').textContent  = S.score;
+  $('s-streak').textContent = S.streak;
+  $('s-left').textContent   = left();
+  $('streakbox').classList.toggle('hot', S.streak >= 3);
+  $('b-undo').disabled = S.history.length === 0 || S.over;
+  $('wl-count').textContent = S.matched.length + ' / ' + S.words.length;
+}
+
+function renderWordlist(){
+  const ul = $('wordlist');
+  if (!S.matched.length){
+    ul.innerHTML = '<li class="none">Matched pairs collect here.</li>';
+    return;
+  }
+  ul.innerHTML = S.matched.map(w =>
+    '<li><span class="sv">' + esc(w[0]) + '</span><span class="en">' + esc(w[1]) + '</span>' +
+    '<button class="say" type="button" data-w="' + esc(w[0]) + '" title="Lyssna">🔊</button></li>'
+  ).reverse().join('');
+}
+
+function say(text){ $('msg').innerHTML = text; }
+
+/* ------------------------------------------------------------------
+   Playing
+------------------------------------------------------------------- */
+function snapshot(){
+  S.history.push({
+    board: S.board.slice(), stock: S.stock.slice(), waste: S.waste.slice(),
+    score: S.score, streak: S.streak, matched: S.matched.slice(),
+    recycles: S.recycles, hints: S.hints, wrongs: S.wrongs
+  });
+  if (S.history.length > 60) S.history.shift();
+}
+
+function undo(){
+  const h = S.history.pop();
+  if (!h) return;
+  Object.assign(S, h);
+  S.sel = null;
+  paint(); renderWordlist();
+  say('Steg tillbaka.');
+}
+
+function startClock(){
+  if (S.started) return;
+  S.started = Date.now();
+}
+
+function cardAt(sel){
+  if (!sel) return null;
+  return sel.zone === 'p' ? S.board[sel.i] : wasteTop();
+}
+
+function tapPyramid(i){
+  if (S.over) return;
+  if (!S.board[i]) return;
+  if (!isFree(i)){
+    flash(els.slots[i]);
+    say('Still covered — clear the cards lying on it first.');
+    return;
+  }
+  select({ zone:'p', i });
+}
+
+function tapWaste(){
+  if (S.over || !wasteTop()) return;
+  select({ zone:'w' });
+}
+
+function select(sel){
+  startClock();
+  const cur = S.sel;
+  if (cur && cur.zone === sel.zone && cur.i === sel.i){ S.sel = null; paint(); return; }
+  if (!cur){
+    S.sel = sel;
+    paint();
+    const c = cardAt(sel);
+    if (c.lang === 'sv') speak(c.sv);
+    say('<b>' + esc(c.text) + '</b> — now find its ' + (c.lang === 'sv' ? 'English' : 'Swedish') + ' twin.');
+    return;
+  }
+  const a = cardAt(cur), b = cardAt(sel);
+  if (matches(a,b)) resolveMatch(cur, sel, a);
+  else miss(cur, sel);
+}
+
+function elOf(sel){
+  return sel.zone === 'p' ? els.slots[sel.i] : $('waste').querySelector('.card');
+}
+
+function flash(el){
+  if (!el) return;
+  el.classList.remove('wrong');
+  void el.offsetWidth;
+  el.classList.add('wrong');
+  setTimeout(() => el.classList.remove('wrong'), 420);
+}
+
+function miss(s1, s2){
+  flash(elOf(s1)); flash(elOf(s2));
+  const a = cardAt(s1), b = cardAt(s2);
+  S.wrongs++;
+  S.streak = 0;
+  S.score = Math.max(0, S.score - 25);
+  S.sel = null;
+  paint();
+  say('<b>' + esc(a.text) + '</b> is not <b>' + esc(b.text) + '</b>. Streak lost.');
+}
+
+function resolveMatch(s1, s2, card){
+  snapshot();
+  const bonus = Math.min(S.streak, 5) * 20;
+  S.score += 100 + bonus;
+  S.streak++;
+  S.best = Math.max(S.best, S.streak);
+  S.matched.push([card.sv, card.en]);
+
+  [s1, s2].forEach(s => {
+    if (s.zone === 'p') S.board[s.i] = null;
+    else S.waste.pop();
+  });
+  S.sel = null;
+  speak(card.sv);
+  paint(); renderWordlist();
+  say('<b>' + esc(card.sv) + '</b> = ' + esc(card.en) + (bonus ? '  &nbsp;+' + (100 + bonus) + ' (svit ×' + S.streak + ')' : '  &nbsp;+100'));
+  if (left() === 0) win();
+}
+
+function drawStock(){
+  if (S.over || !S.stock.length) return;
+  startClock();
+  snapshot();
+  S.waste.push(S.stock.pop());
+  S.sel = null;
+  paint();
+  const t = wasteTop();
+  if (t.lang === 'sv') speak(t.sv);
+  say('Ny bricka: <b>' + esc(t.text) + '</b>');
+}
+
+function recycle(){
+  if (S.over || S.stock.length || !S.waste.length) return;
+  snapshot();
+  S.stock = S.waste.reverse();
+  S.waste = [];
+  S.recycles++;
+  S.score = Math.max(0, S.score - 30);
+  S.sel = null;
+  paint();
+  say('Talongen vänd igen. <b>&minus;30</b> — men den räcker hur länge som helst.');
+}
+
+/* ------------------------------------------------------------------
+   Hints
+------------------------------------------------------------------- */
+function freeSlots(){ const out = []; for (let i = 0; i < S.N; i++) if (isFree(i)) out.push(i); return out; }
+
+function findMove(){
+  const fs = freeSlots();
+  for (let a = 0; a < fs.length; a++)
+    for (let b = a+1; b < fs.length; b++)
+      if (matches(S.board[fs[a]], S.board[fs[b]])) return [{zone:'p',i:fs[a]}, {zone:'p',i:fs[b]}];
+  const w = wasteTop();
+  if (w) for (const i of fs) if (matches(S.board[i], w)) return [{zone:'p',i}, {zone:'w'}];
+  return null;
+}
+
+function hint(){
+  if (S.over) return;
+  startClock();
+  if (S.sel){
+    const c = cardAt(S.sel);
+    S.score = Math.max(0, S.score - 50);
+    S.hints++;
+    const el = elOf(S.sel);
+    if (el){ el.classList.add('peek'); setTimeout(() => el.classList.remove('peek'), 2200); }
+    speak(c.sv);
+    paint();
+    say('<b>' + esc(c.sv) + '</b> = ' + esc(c.en) + ' &nbsp;<span style="opacity:.6">(&minus;50)</span>');
+    return;
+  }
+  const mv = findMove();
+  if (!mv){
+    const has = S.stock.length ? 'Turn the stock' : 'Turn the stock over';
+    say('Nothing on the table pairs up. <b>' + has + '</b> — the deal can always be cleared.');
+    return;
+  }
+  S.score = Math.max(0, S.score - 50);
+  S.hints++;
+  paint();
+  mv.forEach(s => { const el = elOf(s); if (el){ el.classList.add('hint'); setTimeout(() => el.classList.remove('hint'), 3400); } });
+  say('These two belong together. <span style="opacity:.6">(&minus;50)</span>');
+}
+
+/* ------------------------------------------------------------------
+   Speech
+------------------------------------------------------------------- */
+let voices = [];
+function loadVoices(){ try { voices = speechSynthesis.getVoices() || []; } catch(e){ voices = []; } }
+if (window.speechSynthesis){
+  loadVoices();
+  speechSynthesis.addEventListener('voiceschanged', loadVoices);
+} else {
+  document.addEventListener('DOMContentLoaded', () => { const b = $('b-sound'); if (b) b.style.display = 'none'; });
+}
+
+function speak(text){
+  if (!S || !S.sound || !window.speechSynthesis) return;
+  try {
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang = 'sv-SE';
+    const v = voices.find(v => /^sv/i.test(v.lang));
+    if (v) u.voice = v;
+    u.rate = 0.85;
+    speechSynthesis.cancel();
+    speechSynthesis.speak(u);
+  } catch(e){}
+}
+
+/* ------------------------------------------------------------------
+   Clock & end of game
+------------------------------------------------------------------- */
+const mmss = s => Math.floor(s/60) + ':' + String(s % 60).padStart(2,'0');
+
+setInterval(() => {
+  if (!S || S.over || !S.started) return;
+  S.elapsed = Math.floor((Date.now() - S.started) / 1000);
+  $('s-time').textContent = mmss(S.elapsed);
+}, 1000);
+
+function win(){
+  S.over = true;
+  const speedBonus = Math.max(0, 1500 - S.elapsed * 4);
+  S.score += speedBonus;
+  paint();
+  $('ov-title').textContent = 'Grattis!';
+  $('ov-lede').innerHTML = 'Pyramiden är tom. Speed bonus <b>+' + speedBonus + '</b>' +
+    (S.wrongs ? ', with ' + S.wrongs + ' wrong ' + (S.wrongs === 1 ? 'pair' : 'pairs') : ', with no wrong pairs') +
+    (S.hints ? ' and ' + S.hints + ' hint' + (S.hints === 1 ? '' : 's') : '') + '.';
+  $('ov-score').textContent  = S.score;
+  $('ov-time').textContent   = mmss(S.elapsed);
+  $('ov-streak').textContent = S.best;
+  $('ov-list').innerHTML = S.matched.map(w =>
+    '<li><span class="sv">' + esc(w[0]) + '</span><span class="en">' + esc(w[1]) + '</span>' +
+    '<button class="say" type="button" data-w="' + esc(w[0]) + '" title="Lyssna">🔊</button></li>'
+  ).join('');
+  $('overlay').hidden = false;
+}
+
+/* ------------------------------------------------------------------
+   Wiring
+------------------------------------------------------------------- */
+$('b-new').addEventListener('click', newDeal);
+$('b-undo').addEventListener('click', undo);
+$('b-hint').addEventListener('click', hint);
+$('b-theme').addEventListener('change', newDeal);
+$('b-sound').addEventListener('click', e => {
+  S.sound = !S.sound;
+  e.currentTarget.classList.toggle('on', S.sound);
+  e.currentTarget.setAttribute('aria-pressed', String(S.sound));
+  e.currentTarget.textContent = (S.sound ? '🔊' : '🔇') + ' Uttal';
+  if (!S.sound && window.speechSynthesis) speechSynthesis.cancel();
+});
+$('ov-again').addEventListener('click', newDeal);
+$('ov-close').addEventListener('click', () => { $('overlay').hidden = true; });
+document.addEventListener('click', e => {
+  const b = e.target.closest('.say');
+  if (b) speak(b.dataset.w);
+});
+
+let resizeT;
+window.addEventListener('resize', () => {
+  clearTimeout(resizeT);
+  resizeT = setTimeout(layout, 120);
+});
+
+newDeal();
+$('b-sound').classList.add('on');
+</script>
+<!--ARTIFACT-END-->
+</body>
+</html>
