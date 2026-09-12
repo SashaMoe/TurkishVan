@@ -113,12 +113,6 @@ button{font:inherit;color:inherit}
 :focus-visible{outline:2px solid var(--focus);outline-offset:2px;border-radius:4px}
 
 .wrap{max-width:1080px;margin:0 auto;padding:18px 16px 40px}
-@media (max-width:560px){
-  .mark{flex-wrap:wrap;gap:4px 10px}
-  .mark h1{font-size:25px}
-  .mark .sub{font-size:11px}
-  .legend{gap:10px;font-size:12px}
-}
 
 /* ---------- masthead ---------- */
 .masthead{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap;
@@ -138,13 +132,16 @@ button{font:inherit;color:inherit}
 @media (max-width:880px){ .board{grid-template-columns:minmax(0,1fr)} }
 
 /* ---------- scorebar ---------- */
-.scorebar{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;background:var(--line-soft);
+.scorebar{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(0,1fr);gap:1px;background:var(--line-soft);
   border:1px solid var(--line);border-radius:8px;overflow:hidden;margin-bottom:12px}
+.scorebar .stat[hidden]{display:none}
 .stat{background:var(--panel);padding:8px 10px;min-width:0}
 .stat .k{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);font-weight:600}
 .stat .v{font-size:21px;font-weight:600;font-variant-numeric:tabular-nums;letter-spacing:-.01em;line-height:1.2}
 .stat .v small{font-size:12px;color:var(--ink-3);font-weight:500}
 .stat.hot .v{color:var(--ochre)}
+.hearts{letter-spacing:-.04em;font-size:.85em}
+.hearts i{color:var(--ink-3);opacity:.35;font-style:normal}
 
 /* ---------- table ---------- */
 .table{
@@ -191,6 +188,7 @@ button{font:inherit;color:inherit}
   overflow:hidden;
 }
 .card .word span{display:block}
+.oneline .card .word span{white-space:nowrap;overflow:hidden}
 .card .foot{flex:1;display:flex;align-items:flex-end;justify-content:flex-end;padding:0 6px 3px;
   font-size:calc(var(--tagh) * .66);color:var(--ink-3);white-space:nowrap;overflow:hidden;
   font-weight:600;letter-spacing:.08em;text-transform:uppercase;opacity:.7}
@@ -217,10 +215,11 @@ button{font:inherit;color:inherit}
 }
 
 /* ---------- piles ---------- */
-.piles{display:flex;align-items:center;gap:14px;margin-top:18px;padding-top:14px;border-top:1px dashed var(--line);flex-wrap:wrap}
+.piles{display:flex;align-items:center;gap:14px;margin-top:16px;padding-top:14px;border-top:1px dashed var(--line);flex-wrap:wrap}
+.piles[hidden]{display:none}
 .pile{display:flex;flex-direction:column;gap:5px;align-items:center}
 .pile .lab{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);font-weight:600}
-.slot{position:relative;width:var(--cw);height:var(--ch)}
+.slot{position:relative;width:var(--cw);height:var(--pileh)}
 .slot .card{position:absolute;inset:0;width:auto;height:auto}
 .empty{position:absolute;inset:0;border:1px dashed var(--line);border-radius:7px}
 .back{
@@ -238,11 +237,13 @@ button{font:inherit;color:inherit}
 .back .n{background:rgba(0,0,0,.28);padding:2px 7px;border-radius:20px;font-variant-numeric:tabular-nums}
 .recycle{border-style:dashed;background:transparent;color:var(--ink-2);border-color:var(--line)}
 .recycle:hover{color:var(--ink)}
-.piles .msg{flex:1;min-width:160px;font-size:13px;color:var(--ink-2);align-self:flex-end;padding-bottom:6px}
-.piles .msg b{color:var(--ink);font-weight:600}
+.msg{margin:12px 0 0;font-size:13px;color:var(--ink-2);height:2.7em;overflow:hidden}
+.msg b{color:var(--ink);font-weight:600}
+.table.nostock .msg{margin-top:14px;padding-top:12px;border-top:1px dashed var(--line);height:3em}
 
 /* ---------- controls ---------- */
 .controls{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0 0}
+.controls .btn[hidden]{display:none}
 .btn{
   background:var(--panel);border:1px solid var(--line);border-radius:7px;
   padding:7px 12px;font-size:13px;font-weight:500;cursor:pointer;
@@ -291,6 +292,33 @@ select.btn{padding-right:8px}
 .finals .v{font-size:19px;font-weight:600;font-variant-numeric:tabular-nums}
 .recap{max-height:220px;overflow-y:auto;margin-bottom:16px}
 .sheet .row{display:flex;gap:8px}
+/* ---------- phone: hand the wall as much of the screen as possible ----------
+   Last in the file on purpose.  A media query adds no specificity, so any of
+   these that sat above the rule it overrides would simply lose. */
+@media (max-width:560px){
+  .wrap{padding:9px 9px 20px}
+  .masthead{padding-bottom:7px;margin-bottom:8px;gap:6px}
+  .mark{gap:1px 8px}
+  .mark h1{font-size:21px}
+  .mark .sub{font-size:9.5px;letter-spacing:.1em}
+  .legend{display:none}
+  .scorebar{margin-bottom:7px}
+  .stat{padding:3px 5px}
+  .stat .k{font-size:8.5px;letter-spacing:.04em}
+  .stat .k .en2{display:none}
+  .stat .v{font-size:16px}
+  .table{padding:9px 7px 8px}
+  .piles{margin-top:9px;padding-top:9px;gap:9px}
+  .pile{gap:3px}
+  .pile .lab{font-size:8.5px}
+  .pile .lab .en2{display:none}
+  .hearts{font-size:.72em;letter-spacing:-.06em}
+  .msg{margin-top:8px;height:2.5em;font-size:12px}
+  .table.nostock .msg{margin-top:9px;padding-top:9px;height:2.9em}
+  .controls{gap:5px;margin-top:8px}
+  .btn{padding:4px 8px;font-size:11.5px;border-radius:6px}
+  .card-panel{padding:10px}
+}
 </style>
 </head>
 <body>
@@ -305,7 +333,7 @@ select.btn{padding-right:8px}
     <div class="legend">
       <span class="chip"><i class="swatch sv"></i> <b>Svenska</b></span>
       <span class="chip"><i class="swatch en"></i> <b>English</b></span>
-      <span class="chip">Clear the pyramid by pairing each word with its translation.</span>
+      <span class="chip">Clear the wall by pairing each word with its translation.</span>
     </div>
   </header>
 
@@ -313,32 +341,39 @@ select.btn{padding-right:8px}
 
     <main>
       <div class="scorebar">
-        <div class="stat"><div class="k">Poäng &middot; Score</div><div class="v" id="s-score">0</div></div>
-        <div class="stat" id="streakbox"><div class="k">Svit &middot; Streak</div><div class="v" id="s-streak">0</div></div>
-        <div class="stat"><div class="k">Kvar &middot; Left</div><div class="v" id="s-left">0</div></div>
-        <div class="stat"><div class="k">Tid &middot; Time</div><div class="v" id="s-time">0:00</div></div>
+        <div class="stat"><div class="k">Poäng <span class="en2">&middot; Score</span></div><div class="v" id="s-score">0</div></div>
+        <div class="stat" id="streakbox"><div class="k">Svit <span class="en2">&middot; Streak</span></div><div class="v" id="s-streak">0</div></div>
+        <div class="stat"><div class="k">Kvar <span class="en2">&middot; Left</span></div><div class="v" id="s-left">0</div></div>
+        <div class="stat"><div class="k">Tid <span class="en2">&middot; Time</span></div><div class="v" id="s-time">0:00</div></div>
+        <div class="stat" id="extrabox" hidden><div class="k" id="s-extra-k">Liv</div><div class="v" id="s-extra">0</div></div>
       </div>
 
       <section class="table">
         <div class="pyramid" id="pyramid"></div>
 
-        <div class="piles">
+        <div class="piles" id="piles">
           <div class="pile">
-            <span class="lab">Talong &middot; Stock</span>
+            <span class="lab">Talong <span class="en2">&middot; Stock</span></span>
             <div class="slot" id="stock"></div>
           </div>
           <div class="pile">
-            <span class="lab">Öppen &middot; Waste</span>
+            <span class="lab">Öppen <span class="en2">&middot; Waste</span></span>
             <div class="slot" id="waste"><div class="empty"></div></div>
           </div>
-          <p class="msg" id="msg">Tap a card, then tap its translation.</p>
         </div>
+        <p class="msg" id="msg">Tap a card, then tap its translation.</p>
       </section>
 
       <div class="controls">
         <button class="btn primary" id="b-new">New deal</button>
+        <select class="btn" id="b-mode" aria-label="Game mode">
+          <option value="dodlage">Dödläge &middot; dead ends</option>
+          <option value="misstag">Misstag &middot; five lives</option>
+          <option value="ova">Öva &middot; free play</option>
+        </select>
+        <button class="btn" id="b-hint">Hint<span id="hint-n"></span> <span class="cost">&minus;50</span></button>
+        <button class="btn" id="b-shuffle">Blanda om<span id="shuffle-n"></span> <span class="cost">&minus;100</span></button>
         <button class="btn" id="b-undo">Undo</button>
-        <button class="btn" id="b-hint">Hint <span class="cost">&minus;50</span></button>
         <button class="btn" id="b-sound" aria-pressed="true">🔊 Uttal</button>
         <select class="btn" id="b-theme" aria-label="Word theme">
           <option value="all">All words</option>
@@ -362,7 +397,7 @@ select.btn{padding-right:8px}
         <h2>Så spelar du</h2>
         <p><b>Free cards</b> are the ones nothing lies on top of &mdash; plus the face-up waste card.</p>
         <p>Tap a free card, then tap the card that <b>translates</b> it. A right pair leaves the table; a wrong one costs you the streak.</p>
-        <p><b>Stock</b> deals a new face-up word. Turn it over as often as you like &mdash; every deal can be cleared, but each reshuffle costs 30.</p>
+        <p id="howto-mode"></p>
         <p><b>Hint</b> with a card selected reveals its translation; with nothing selected it points at a pair.</p>
         <p>Corner marks are the word class: <span class="kbd">en</span> / <span class="kbd">ett</span> nouns, <span class="kbd">att</span> verbs, <span class="kbd">adj</span>, <span class="kbd">fras</span>.</p>
       </div>
@@ -380,7 +415,7 @@ select.btn{padding-right:8px}
       <div><div class="k">Tid</div><div class="v" id="ov-time">0:00</div></div>
       <div><div class="k">Bästa svit</div><div class="v" id="ov-streak">0</div></div>
     </div>
-    <h2 style="font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3)">Orden du klarade</h2>
+    <h2 id="ov-listhead" style="font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3)">Orden du klarade</h2>
     <ul class="wordlist recap" id="ov-list"></ul>
     <div class="row">
       <button class="btn primary" id="ov-again">Deal again</button>
@@ -733,54 +768,118 @@ const THEMES = {
 };
 
 /* ------------------------------------------------------------------
-   Pyramid geometry.  Slot index = r*(r+1)/2 + c, row r holds r+1 cards,
-   and the card at (r,c) is covered by (r+1,c) and (r+1,c+1).
-------------------------------------------------------------------- */
-const idx  = (r,c) => r*(r+1)/2 + c;
-const rowOf = i => { let r = 0; while (idx(r+1,0) <= i) r++; return r; };
-const colOf = i => i - idx(rowOf(i),0);
+   Modes
 
-/* p lies above q, so q must be cleared before p can be reached */
-function above(p,q){
-  const pr = rowOf(p), pc = colOf(p), qr = rowOf(q), qc = colOf(q);
-  return qr > pr && qc >= pc && qc <= pc + (qr - pr);
+   ova       free play.  The deal can always be cleared however you play
+             it; undo and hints are unlimited.  Nothing can kill you.
+   misstag   five lives, three hints, no undo.  A wrong pair costs a life.
+   dodlage   every pair lies on the table, there is no stock and no undo.
+             The deal can be cleared, but only by an order you have to
+             find — play into a dead end and it is lost.
+------------------------------------------------------------------- */
+const MODES = {
+  ova:     { stock:true,  lives:0, hints:0, shuffles:0, undo:true,  deadly:false },
+  misstag: { stock:true,  lives:5, hints:3, shuffles:0, undo:false, deadly:false },
+  dodlage: { stock:false, lives:0, hints:0, shuffles:2, undo:false, deadly:true  }
+};
+
+/* ------------------------------------------------------------------
+   PURE-LOGIC-START  (geometry and dealing; the test harness in
+   tools/simulate.js evaluates everything down to PURE-LOGIC-END)
+
+   Board geometry.  A wall is a list of rows, each [count, offset], the
+   offset measured in card steps — .5 means "half a card to the right".
+   A card is covered by the cards in the row *below* it that overlap it
+   horizontally: two in the middle of a wide row, one at its ragged
+   edges.  Same covering rule the pyramid used, without the pyramid —
+   rows can now be any width, so ten rows need only four cards across.
+------------------------------------------------------------------- */
+const WALLS = {
+  /* Dodlage walls have a narrow row pinching the wall twice.  The pinch
+     leaves the ends of the row above it in the open, so eight cards are
+     free at once instead of four — enough choice to go wrong with, which
+     is what makes the mode losable.  Chosen by measurement, not eye:
+     tools/simulate.js scores a wall by how often careful play still ends
+     in a dead end (about one deal in six here) and by how much better
+     careful play does than random (about eighteen points). */
+
+  /* phone, no stock — ten rows, four across, 36 slots / 18 matches */
+  tall10: [[4,0],[4,0],[2,1],[4,0],[4,0],[4,0],[4,0],[2,1],[4,0],[4,0]],
+  /* laptop, no stock — eight rows, five across, 36 slots */
+  wide8:  [[5,0],[5,0],[3,1],[5,0],[5,0],[3,1],[5,0],[5,0]],
+
+  /* With a stock the wall has to give up rows to the pile below it, and
+     it cannot dead-lock anyway, so these two stay plain woven walls. */
+  /* phone, with stock — eight rows, 28 slots */
+  tall8:  [[3,.5],[4,0],[3,.5],[4,0],[3,.5],[4,0],[3,.5],[4,0]],
+  /* laptop, with stock — six rows, 28 slots */
+  wide6:  [[5,0],[4,.5],[5,0],[4,.5],[5,0],[5,0]]
+};
+
+function buildWall(rows){
+  const slots = [];
+  rows.forEach(([n, off], r) => { for (let j = 0; j < n; j++) slots.push({ r, x: off + j }); });
+  const N = slots.length;
+
+  const children = slots.map(() => []);
+  for (let i = 0; i < N; i++)
+    for (let j = 0; j < N; j++)
+      if (slots[j].r === slots[i].r + 1 && Math.abs(slots[j].x - slots[i].x) < 0.99)
+        children[i].push(j);
+
+  /* blockers[i] = every slot lying on top of i, however deep */
+  const blockers = new Array(N).fill(null);
+  [...Array(N).keys()].sort((a,b) => slots[b].r - slots[a].r).forEach(i => {
+    const s = new Set();
+    children[i].forEach(c => { s.add(c); blockers[c].forEach(v => s.add(v)); });
+    blockers[i] = s;
+  });
+
+  return { N, slots, children, blockers,
+           depth: rows.length,
+           width: Math.max(...rows.map(([n, off]) => off + n)) };
 }
 
-const rand  = n => Math.floor(Math.random()*n);
+const rand    = n => Math.floor(Math.random()*n);
 const shuffle = a => { for (let i=a.length-1;i>0;i--){ const j=rand(i+1); [a[i],a[j]]=[a[j],a[i]]; } return a; };
 
 /* ------------------------------------------------------------------
-   The deal.  Every deal this builds can be cleared:
-   - most pyramid cards have their partner in the stock, which recycles
-     for ever, so they can always be matched once uncovered;
-   - the few pairs sitting entirely inside the pyramid are placed so
-     that no pair blocks another in a cycle (checked below).
+   Two ways to fill the wall.
+
+   withStock() — modes ova and misstag.  k pairs sit entirely in the
+   wall, placed so no pair blocks another in a cycle; every other card
+   keeps its partner in the stock, which recycles for ever.  So these
+   deals can always be cleared, whatever order you play them in.
+
+   solvable() — mode dodlage.  Deals by running a game backwards: take
+   two slots that are free in what is left, give them a pair, lift them
+   off, repeat.  The order they came off in is a solution, so the deal
+   *can* be cleared — but the player is free to choose a different
+   order, and some of those orders strand the rest of the board.
 ------------------------------------------------------------------- */
-function placePairs(N, k){
-  for (let attempt = 0; attempt < 200; attempt++){
-    const free = shuffle([...Array(N).keys()]);
+function withStock(W, k){
+  for (let attempt = 0; attempt < 400; attempt++){
+    const free = shuffle([...Array(W.N).keys()]);
     const pairs = [], loose = [];
     while (free.length > 1 && pairs.length < k){
       const a = free.shift();
-      const j = free.findIndex(b => !above(a,b) && !above(b,a));
+      const j = free.findIndex(b => !W.blockers[a].has(b) && !W.blockers[b].has(a));
       if (j === -1){ loose.push(a); continue; }
       pairs.push([a, free.splice(j,1)[0]]);
     }
     if (pairs.length < k) continue;
-    if (acyclic(pairs)) return { pairs, rest: free.concat(loose) };
+    if (acyclic(W, pairs)) return { pairs, rest: free.concat(loose) };
   }
   return null;
 }
 
 /* pair P depends on pair Q when a card of Q lies on top of a card of P */
-function acyclic(pairs){
+function acyclic(W, pairs){
   const n = pairs.length;
   const dep = pairs.map(P => {
     const out = [];
-    for (let q = 0; q < n; q++){
-      const Q = pairs[q];
-      if (P.some(a => Q.some(b => above(a,b)))) out.push(q);
-    }
+    for (let q = 0; q < n; q++)
+      if (P.some(a => pairs[q].some(b => W.blockers[a].has(b)))) out.push(q);
     return out;
   });
   const mark = new Array(n).fill(0);           /* 0 new, 1 open, 2 done */
@@ -796,9 +895,39 @@ function acyclic(pairs){
   return true;
 }
 
-function pickWords(themeKey, need){
+/* A removal order for the given slots, or null if there is none.
+
+   Early attempts take free slots at random, which is what keeps dealt
+   boards varied.  Later ones take the two cards holding the most down:
+   pick at random and you can drain one stack while another is left too
+   tall to finish, so the random attempts alone will call a board dead
+   that a careful order would still clear. */
+function solvable(W, live){
+  if (live.length % 2) return null;
+  for (let attempt = 0; attempt < 200; attempt++){
+    const rest = new Set(live), order = [];
+    while (rest.size){
+      const free = [...rest].filter(i => W.children[i].every(j => !rest.has(j)));
+      if (free.length < 2) break;
+      if (attempt < 50) shuffle(free);
+      else {
+        const holds = i => { let n = 0; rest.forEach(j => { if (W.blockers[j].has(i)) n++; }); return n; };
+        const w = new Map(free.map(i => [i, holds(i) + Math.random()]));
+        free.sort((a,b) => w.get(b) - w.get(a));
+      }
+      order.push([free[0], free[1]]);
+      rest.delete(free[0]); rest.delete(free[1]);
+    }
+    if (!rest.size) return order;
+  }
+  return null;
+}
+
+function pickWords(themeKey, need, maxLen){
   const cats = THEMES[themeKey];
-  let pool = cats ? BANK.filter(w => cats.includes(w[4])) : BANK.slice();
+  const fits = w => Math.max(w[0].length, w[1].length) <= maxLen;
+  let pool = (cats ? BANK.filter(w => cats.includes(w[4])) : BANK).filter(fits);
+  if (pool.length < need) pool = BANK.filter(fits);
   if (pool.length < need) pool = BANK.slice();
   shuffle(pool);
   const out = [], seenSv = new Set(), seenEn = new Set();
@@ -815,6 +944,7 @@ function pickWords(themeKey, need){
 
 const SV_TAG = w => w[2] === 'n' ? (w[3] || 'pl') : w[2] === 'v' ? 'att' : w[2] === 'a' ? 'adj' : 'fras';
 const EN_TAG = w => w[2] === 'n' ? 'n.'  : w[2] === 'v' ? 'v.'  : w[2] === 'a' ? 'adj.' : 'ph.';
+const longer = w => Math.max(w[0].length, w[1].length);
 
 let cardSeq = 0;
 const mkCard = (w, pid, lang) => ({
@@ -825,67 +955,146 @@ const mkCard = (w, pid, lang) => ({
   sv: w[0], en: w[1]
 });
 
+/* Build one deal: the wall, what sits in each slot, what is in the stock.
+   Screen-independent, so the simulator can check it without a browser. */
+function makeDeal(modeKey, shape, themeKey, maxLen){
+  const M = MODES[modeKey];
+  const W = buildWall(WALLS[shape]);
+  const board = new Array(W.N).fill(null);
+  const stock = [];
+  let words, total;
+
+  if (M.stock){
+    let plan = null, k = Math.round(W.N * 0.3);
+    while (!plan && k >= 0) plan = withStock(W, k--);
+    if (!plan) return null;
+    total = plan.pairs.length + plan.rest.length;
+    words = pickWords(themeKey, total, maxLen);
+    /* the words whose two halves both sit on the table are the ones that
+       have to fit a clipped card twice, so give those the shortest */
+    words.sort((a,b) => longer(a) - longer(b));
+    let p = 0;
+    plan.pairs.forEach(([a,b]) => {
+      const w = words[p], svFirst = Math.random() < 0.5;
+      board[a] = mkCard(w, p, svFirst ? 'sv' : 'en');
+      board[b] = mkCard(w, p, svFirst ? 'en' : 'sv');
+      p++;
+    });
+    plan.rest.forEach(pos => {
+      const w = words[p];
+      /* shorter side on the table, longer one in the stock where the
+         whole card shows */
+      const onTable = w[0].length <= w[1].length ? 'sv' : 'en';
+      board[pos] = mkCard(w, p, onTable);
+      stock.push(mkCard(w, p, onTable === 'sv' ? 'en' : 'sv'));
+      p++;
+    });
+  } else {
+    const order = solvable(W, [...Array(W.N).keys()]);
+    if (!order) return null;
+    total = order.length;
+
+    /* Every word gets four cards — two svenska, two english — and any sv
+       clears against any en of the same word.  That choice is where
+       mahjong's danger actually lives: pair the wrong two and you bury
+       the other two.  With one card per word the order is all but forced
+       and nothing can go wrong, which is what tools/simulate.js caught:
+       random play cleared every single deal. */
+    const nwords = Math.ceil(total / 2);
+    words = pickWords(themeKey, nwords, maxLen);
+
+    const assign = [];
+    for (let w = 0; w < nwords; w++){
+      assign.push(w);
+      if (assign.length < total) assign.push(w);
+    }
+    shuffle(assign);              /* so a word's four cards land far apart */
+
+    order.forEach(([a,b], n) => {
+      const w = words[assign[n]], svFirst = Math.random() < 0.5;
+      board[a] = mkCard(w, assign[n], svFirst ? 'sv' : 'en');
+      board[b] = mkCard(w, assign[n], svFirst ? 'en' : 'sv');
+    });
+  }
+  return { W, board, stock: shuffle(stock), words, total };
+}
+/* PURE-LOGIC-END */
+
 /* ------------------------------------------------------------------ */
 let S = null;
 
 function newDeal(){
-  const rows = window.innerWidth < 620 ? 5 : 6;
-  const N    = rows*(rows+1)/2;
-  const k    = rows >= 6 ? 4 : 3;            /* pairs living inside the pyramid */
-  const singles = N - 2*k;
-
-  let plan = null, kk = k;
-  while (!plan && kk >= 0) plan = placePairs(N, kk--);
-
-  const need  = plan.pairs.length + plan.rest.length;
-  const words = pickWords($('b-theme').value, need);
-  const board = new Array(N).fill(null);
-  const stock = [];
-  let p = 0;
-
-  plan.pairs.forEach(([a,b]) => {
-    const w = words[p];
-    const svFirst = Math.random() < 0.5;
-    board[a] = mkCard(w, p, svFirst ? 'sv' : 'en');
-    board[b] = mkCard(w, p, svFirst ? 'en' : 'sv');
-    p++;
-  });
-  plan.rest.forEach(pos => {
-    const w = words[p];
-    const onTable = Math.random() < 0.5 ? 'sv' : 'en';
-    board[pos] = mkCard(w, p, onTable);
-    stock.push(mkCard(w, p, onTable === 'sv' ? 'en' : 'sv'));
-    p++;
-  });
+  const mode  = $('b-mode').value;
+  const M     = MODES[mode];
+  const phone = window.innerWidth < 680;
+  const shape = phone ? (M.stock ? 'tall8' : 'tall10') : (M.stock ? 'wide6' : 'wide8');
+  let deal = null;
+  for (let tries = 0; tries < 5 && !deal; tries++)
+    deal = makeDeal(mode, shape, $('b-theme').value, phone ? 10 : 15);
+  if (!deal){ say('Could not build a deal for this wall — try again.'); return; }
 
   S = {
-    rows, N, board, stock: shuffle(stock), waste: [], words,
+    mode, M, W: deal.W, board: deal.board, stock: deal.stock, waste: [],
+    words: deal.words, total: deal.total,
     sel: null, score: 0, streak: 0, best: 0, matched: [],
-    recycles: 0, hints: 0, wrongs: 0, over: false,
+    recycles: 0, hints: 0, wrongs: 0, over: false, won: false,
+    lives: M.lives, hintsLeft: M.hints, shuffles: M.shuffles,
     started: null, elapsed: 0,
     sound: S ? S.sound : true,
     history: []
   };
 
   buildBoard();
-  layout();
+  applyMode();
+  say(M.deadly
+    ? 'Every pair is on the table. Clear it — but mind what you bury.'
+    : 'Tap a card, then tap its translation.');
+  layout();                      /* after the message, which layout measures */
   paint();
   renderWordlist();
-  say('Tap a card, then tap its translation.');
   $('overlay').hidden = true;
 }
 
 /* ------------------------------------------------------------------
    Rules
 ------------------------------------------------------------------- */
-const childrenOf = i => {
-  const r = rowOf(i), c = colOf(i);
-  return r === S.rows - 1 ? [] : [idx(r+1,c), idx(r+1,c+1)];
-};
-const isFree = i => !!S.board[i] && childrenOf(i).every(j => !S.board[j]);
-const matches = (a,b) => a && b && a.pid === b.pid && a.lang !== b.lang;
-const wasteTop = () => S.waste[S.waste.length - 1] || null;
-const left = () => S.board.filter(Boolean).length;
+const isFree    = i => !!S.board[i] && S.W.children[i].every(j => !S.board[j]);
+const matches   = (a,b) => a && b && a.pid === b.pid && a.lang !== b.lang;
+const wasteTop  = () => S.waste[S.waste.length - 1] || null;
+const left      = () => S.board.filter(Boolean).length;
+const freeSlots = () => { const out = []; for (let i = 0; i < S.W.N; i++) if (isFree(i)) out.push(i); return out; };
+
+/* every pair playable right now — the number dodlage lives or dies by */
+function moveCount(){
+  const fs = freeSlots();
+  let n = 0;
+  for (let a = 0; a < fs.length; a++)
+    for (let b = a+1; b < fs.length; b++)
+      if (matches(S.board[fs[a]], S.board[fs[b]])) n++;
+  const w = wasteTop();
+  if (w) for (const i of fs) if (matches(S.board[i], w)) n++;
+  return n;
+}
+
+function findMove(){
+  const fs = freeSlots();
+  for (let a = 0; a < fs.length; a++)
+    for (let b = a+1; b < fs.length; b++)
+      if (matches(S.board[fs[a]], S.board[fs[b]])) return [{zone:'p',i:fs[a]}, {zone:'p',i:fs[b]}];
+  const w = wasteTop();
+  if (w) for (const i of fs) if (matches(S.board[i], w)) return [{zone:'p',i}, {zone:'w'}];
+  return null;
+}
+
+/* the pairs still unmatched, for the end-of-game recap */
+function remaining(){
+  const seen = new Set(), out = [];
+  S.board.concat(S.stock, S.waste).forEach(c => {
+    if (!c || seen.has(c.pid)) return;
+    seen.add(c.pid); out.push([c.sv, c.en]);
+  });
+  return out;
+}
 
 /* ------------------------------------------------------------------
    Rendering
@@ -905,55 +1114,96 @@ function buildBoard(){
   const py = $('pyramid');
   py.innerHTML = '';
   els.slots = [];
-  for (let i = 0; i < S.N; i++){
-    const c = S.board[i];
+  for (let i = 0; i < S.W.N; i++){
     const b = document.createElement('button');
-    b.className = 'card ' + c.lang;
+    b.className = 'card ' + S.board[i].lang;
     b.type = 'button';
     b.dataset.i = i;
-    b.innerHTML = cardHTML(c);
+    b.innerHTML = cardHTML(S.board[i]);
     b.addEventListener('click', () => tapPyramid(i));
     py.appendChild(b);
     els.slots.push(b);
   }
 }
 
+/* Which furniture this mode shows, and what the sidebar says about it.
+   Runs before layout(), because layout() measures what is on the page. */
+function applyMode(){
+  const M = S.M;
+  document.querySelector('.table').classList.toggle('nostock', !M.stock);
+  $('piles').hidden       = !M.stock;
+  $('b-undo').hidden      = !M.undo;
+  $('b-shuffle').hidden   = !M.shuffles;
+  $('extrabox').hidden    = !(M.lives || M.deadly);
+  $('s-extra-k').innerHTML = M.lives ? 'Liv <span class="en2">&middot; Lives</span>'
+                                     : 'Drag <span class="en2">&middot; Moves</span>';
+  $('howto-mode').innerHTML =
+    M.deadly  ? '<b>Dödläge:</b> every pair is on the table and there is no stock. The deal can be cleared, but a careless order buries the partner of a card you have already freed. Run out of moves and it is over &mdash; two <b>omblandningar</b> are your way out, and they cost 100 each.'
+  : M.lives   ? '<b>Misstag:</b> five lives, three hints, no undo. A wrong pair costs a life. The deal itself can always be cleared &mdash; the pressure is on you, not the board.'
+              : '<b>Öva:</b> no way to lose. Unlimited undo and hints, and the stock recycles for ever.';
+}
+
 function layout(){
   if (!S) return;
+  const W     = S.W;
   const table = document.querySelector('.table');
+  const py    = $('pyramid');
+  const root  = document.documentElement.style;
+
+  /* Width first — and only from the width, so that the piles, whose
+     height depends on --cw, cannot feed back into the measurement below. */
   const avail = table.clientWidth - 26;
-  const cols  = S.rows;
-  let step = Math.min(Math.floor(avail / cols), 118);
-  let cw   = Math.max(step - 6, 54);
-
-  /* A covered card only shows the strip above the next row, so size the card
-     from that strip: rail + class tag + two lines of word.  Nothing readable
-     ever falls under the row below. */
-  const fs    = Math.max(10, Math.min(cw * 0.215, 19));
-  const tagH  = Math.round(Math.max(11, fs * 0.66));
-  const wordH = Math.round(2 * fs * 1.08);
-  const band  = 4 + tagH + wordH + 4;
-  const ch    = band + Math.round(fs * 0.95) + 5;
-  const rs    = band;
-
-  const root = document.documentElement.style;
+  const step  = Math.min(Math.floor(avail / W.width), 132);
+  const cw    = Math.max(step - 6, 46);
   root.setProperty('--cw', cw + 'px');
+  root.setProperty('--pileh', Math.round(cw * 1.12) + 'px');
+
+  /* Then height: collapse the wall, measure everything on the page that is
+     not the wall, and give the wall the rest.  rs is the strip a covered
+     card shows, so this is also what decides whether a word gets one line
+     or two.  The transition has to go off for the measurement — while it
+     is running, the wall's box is still the height it is animating away
+     from, and the wall shrinks a little more on every relayout. */
+  const keep = py.style.transition;
+  py.style.transition = 'none';
+  py.style.height = '0px';
+  void py.offsetHeight;
+  const vh   = (window.visualViewport && window.visualViewport.height) || window.innerHeight;
+  const rect = document.querySelector('main').getBoundingClientRect();
+  const room = Math.max(200, vh - (rect.top + window.scrollY + rect.height) - 10);
+  py.style.transition = keep;
+
+  let fs = Math.max(9, Math.min(cw * 0.215, 19));
+  let tagH, footH, rs, one;
+  for (let guard = 0; guard < 40; guard++){
+    tagH  = Math.round(Math.max(10, fs * 0.66));
+    footH = Math.round(fs * 0.95) + 5;
+    const line = Math.round(fs * 1.08);
+    one = 8 + tagH + line;
+    rs  = Math.min(8 + tagH + 2 * line, Math.floor((room - footH) / W.depth));
+    if (rs >= one || fs <= 9) break;
+    fs -= 0.5;
+  }
+  rs = Math.max(rs, one);                       /* never clip the word itself */
+  const lines = rs >= 8 + tagH + 2 * Math.round(fs * 1.08) ? 2 : 1;
+  const ch    = rs + footH;
+
   root.setProperty('--ch', ch + 'px');
   root.setProperty('--tagh', tagH + 'px');
-  root.setProperty('--wordh', wordH + 'px');
+  root.setProperty('--wordh', (rs - 8 - tagH) + 'px');
 
-  const py = $('pyramid');
-  document.querySelector('.table').classList.toggle('compact', cw < 82);
-  py.style.width  = (cols * step) + 'px';
-  py.style.height = ((S.rows - 1) * rs + ch) + 'px';
+  table.classList.toggle('compact', cw < 82);
+  table.classList.toggle('oneline', lines === 1);
+  py.style.width  = ((W.width - 1) * step + cw) + 'px';
+  py.style.height = ((W.depth - 1) * rs + ch) + 'px';
 
   els.slots.forEach((el, i) => {
-    const r = rowOf(i), c = colOf(i);
-    el.style.left = (((cols - (r+1)) * step) / 2 + c * step) + 'px';
-    el.style.top  = (r * rs) + 'px';
-    fitWord(el, cw);
+    el.style.left = (W.slots[i].x * step) + 'px';
+    el.style.top  = (W.slots[i].r * rs) + 'px';
+    fitWord(el, cw, lines, fs);
   });
-  document.querySelectorAll('#waste .card, #stock .card').forEach(el => fitWord(el, cw));
+  els.fit = { cw, lines, fs };
+  document.querySelectorAll('#waste .card').forEach(el => fitWord(el, cw, lines, fs));
 }
 
 let meas = null;
@@ -969,17 +1219,22 @@ function advance(text, f){
   return meas.offsetWidth;
 }
 
-/* Shrink until the longest single word sits on one line and the whole
-   phrase fits the two lines the card shows.  No "gamma / l" breaks. */
-function fitWord(el, cw){
+/* Shrink until the word fits the strip the card actually shows: the whole
+   phrase on one line when that is all there is room for, otherwise the
+   longest word on a line and the phrase across two.  Never a broken word. */
+function fitWord(el, cw, lines, fs){
   const span = el.querySelector('.word span');
   if (!span) return;
-  const text    = span.textContent;
-  const longest = text.split(/\s+/).reduce((a,b) => b.length > a.length ? b : a, '');
-  const maxW    = cw - 15;
-  let f = Math.max(10, Math.min(cw * 0.215, 19));
-  while (f > 8   && advance(longest, f) > maxW)        f -= 0.4;
-  while (f > 7.5 && advance(text,    f) > maxW * 1.85) f -= 0.4;
+  const text = span.textContent;
+  const maxW = cw - 15;
+  let f = fs;
+  if (lines === 1){
+    while (f > 7 && advance(text, f) > maxW) f -= 0.4;
+  } else {
+    const longest = text.split(/\s+/).reduce((a,b) => b.length > a.length ? b : a, '');
+    while (f > 8   && advance(longest, f) > maxW)        f -= 0.4;
+    while (f > 7.5 && advance(text,    f) > maxW * 1.85) f -= 0.4;
+  }
   span.parentElement.style.fontSize = f.toFixed(1) + 'px';
 }
 
@@ -994,41 +1249,56 @@ function paint(){
     el.disabled = !c;
   });
 
-  /* stock */
-  const st = $('stock');
-  if (S.stock.length){
-    st.innerHTML = '<button class="back" type="button"><span class="n">' + S.stock.length + '</span></button>';
-    st.firstChild.addEventListener('click', drawStock);
-  } else if (S.waste.length){
-    st.innerHTML = '<button class="back recycle" type="button">↻ vänd</button>';
-    st.firstChild.addEventListener('click', recycle);
-  } else {
-    st.innerHTML = '<div class="empty"></div>';
-  }
+  if (S.M.stock){
+    const st = $('stock');
+    if (S.stock.length){
+      st.innerHTML = '<button class="back" type="button"><span class="n">' + S.stock.length + '</span></button>';
+      st.firstChild.addEventListener('click', drawStock);
+    } else if (S.waste.length){
+      st.innerHTML = '<button class="back recycle" type="button">&#8635; vänd</button>';
+      st.firstChild.addEventListener('click', recycle);
+    } else {
+      st.innerHTML = '<div class="empty"></div>';
+    }
 
-  /* waste */
-  const w  = $('waste');
-  const top = wasteTop();
-  if (top){
-    const b = document.createElement('button');
-    b.className = 'card free ' + top.lang;
-    b.type = 'button';
-    b.innerHTML = cardHTML(top);
-    b.addEventListener('click', tapWaste);
-    if (S.sel && S.sel.zone === 'w') b.classList.add('sel');
-    w.innerHTML = '';
-    w.appendChild(b);
-    fitWord(b, parseInt(getComputedStyle(document.documentElement).getPropertyValue('--cw')) || 90);
-  } else {
-    w.innerHTML = '<div class="empty"></div>';
+    const w = $('waste'), top = wasteTop();
+    if (top){
+      const b = document.createElement('button');
+      b.className = 'card free ' + top.lang;
+      b.type = 'button';
+      b.innerHTML = cardHTML(top);
+      b.addEventListener('click', tapWaste);
+      if (S.sel && S.sel.zone === 'w') b.classList.add('sel');
+      w.innerHTML = '';
+      w.appendChild(b);
+      const f = els.fit || { cw: 90, lines: 1, fs: 15 };
+      fitWord(b, f.cw, f.lines, f.fs);
+    } else {
+      w.innerHTML = '<div class="empty"></div>';
+    }
   }
 
   $('s-score').textContent  = S.score;
   $('s-streak').textContent = S.streak;
   $('s-left').textContent   = left();
   $('streakbox').classList.toggle('hot', S.streak >= 3);
-  $('b-undo').disabled = S.history.length === 0 || S.over;
-  $('wl-count').textContent = S.matched.length + ' / ' + S.words.length;
+
+  if (S.M.lives){
+    $('s-extra').innerHTML = '<span class="hearts">' +
+      '&#9829;'.repeat(S.lives) + '<i>' + '&#9829;'.repeat(S.M.lives - S.lives) + '</i></span>';
+    $('extrabox').classList.toggle('hot', S.lives === 1);
+  } else if (S.M.deadly){
+    const n = S.over ? 0 : moveCount();
+    $('s-extra').textContent = n;
+    $('extrabox').classList.toggle('hot', n <= 2);
+  }
+
+  $('b-undo').disabled    = !S.history.length || S.over;
+  $('b-hint').disabled    = S.over || (!!S.M.hints && S.hintsLeft <= 0);
+  $('b-shuffle').disabled = S.over || !S.shuffles;
+  $('hint-n').textContent    = S.M.hints ? ' ×' + S.hintsLeft : '';
+  $('shuffle-n').textContent = ' ×' + S.shuffles;
+  $('wl-count').textContent  = S.matched.length + ' / ' + S.total;
 }
 
 function renderWordlist(){
@@ -1037,9 +1307,10 @@ function renderWordlist(){
     ul.innerHTML = '<li class="none">Matched pairs collect here.</li>';
     return;
   }
-  ul.innerHTML = S.matched.map(w =>
+  const seen = new Set();
+  ul.innerHTML = S.matched.filter(w => !seen.has(w[0]) && seen.add(w[0])).map(w =>
     '<li><span class="sv">' + esc(w[0]) + '</span><span class="en">' + esc(w[1]) + '</span>' +
-    '<button class="say" type="button" data-w="' + esc(w[0]) + '" title="Lyssna">🔊</button></li>'
+    '<button class="say" type="button" data-w="' + esc(w[0]) + '" title="Lyssna">&#128266;</button></li>'
   ).reverse().join('');
 }
 
@@ -1049,6 +1320,7 @@ function say(text){ $('msg').innerHTML = text; }
    Playing
 ------------------------------------------------------------------- */
 function snapshot(){
+  if (!S.M.undo) return;
   S.history.push({
     board: S.board.slice(), stock: S.stock.slice(), waste: S.waste.slice(),
     score: S.score, streak: S.streak, matched: S.matched.slice(),
@@ -1081,7 +1353,7 @@ function tapPyramid(i){
   if (!S.board[i]) return;
   if (!isFree(i)){
     flash(els.slots[i]);
-    say('Still covered — clear the cards lying on it first.');
+    say('Still covered &mdash; clear the cards lying on it first.');
     return;
   }
   select({ zone:'p', i });
@@ -1128,8 +1400,23 @@ function miss(s1, s2){
   S.streak = 0;
   S.score = Math.max(0, S.score - 25);
   S.sel = null;
+  const wrong = a.pid === b.pid
+    ? 'Both of those are the <b>' + (a.lang === 'sv' ? 'svenska' : 'english') + '</b> side. '
+    : '<b>' + esc(a.text) + '</b> is not <b>' + esc(b.text) + '</b>. ';
+
+  if (S.M.lives){
+    S.lives--;
+    if (S.lives <= 0){
+      paint();
+      lose('Slut på liv.', wrong + 'That was the last of five.');
+      return;
+    }
+    paint();
+    say(wrong + '<b>' + S.lives + '</b> liv kvar.');
+    return;
+  }
   paint();
-  say('<b>' + esc(a.text) + '</b> is not <b>' + esc(b.text) + '</b>. Streak lost.');
+  say(wrong + 'Streak lost.');
 }
 
 function resolveMatch(s1, s2, card){
@@ -1147,8 +1434,11 @@ function resolveMatch(s1, s2, card){
   S.sel = null;
   speak(card.sv);
   paint(); renderWordlist();
-  say('<b>' + esc(card.sv) + '</b> = ' + esc(card.en) + (bonus ? '  &nbsp;+' + (100 + bonus) + ' (svit ×' + S.streak + ')' : '  &nbsp;+100'));
-  if (left() === 0) win();
+  say('<b>' + esc(card.sv) + '</b> = ' + esc(card.en) +
+      (bonus ? '  &nbsp;+' + (100 + bonus) + ' (svit &times;' + S.streak + ')' : '  &nbsp;+100'));
+
+  if (left() === 0){ win(); return; }
+  if (S.M.deadly && moveCount() === 0) deadEnd();
 }
 
 function drawStock(){
@@ -1172,31 +1462,98 @@ function recycle(){
   S.score = Math.max(0, S.score - 30);
   S.sel = null;
   paint();
-  say('Talongen vänd igen. <b>&minus;30</b> — men den räcker hur länge som helst.');
+  say('Talongen vänd igen. <b>&minus;30</b> &mdash; men den räcker hur länge som helst.');
+}
+
+/* ------------------------------------------------------------------
+   Dead ends — dodlage only
+------------------------------------------------------------------- */
+function deadEnd(){
+  const live = [];
+  for (let i = 0; i < S.W.N; i++) if (S.board[i]) live.push(i);
+
+  if (!solvable(S.W, live)){
+    lose('Dödläge.', 'What is left cannot be cleared in any order now, so a shuffle ' +
+         'would not help either. The deal was winnable &mdash; the order was not.');
+    return;
+  }
+  if (!S.shuffles){
+    lose('Dödläge.', 'No two free cards pair up, and there is no shuffle left. ' +
+         'The deal was winnable &mdash; the order was not.');
+    return;
+  }
+  say('<b>Dödläge.</b> Nothing pairs up. Blanda om &mdash; you have ' +
+      S.shuffles + ' left.');
+}
+
+/* Lay the remaining pairs back out in an order that is known to come
+   apart, so a shuffle you paid for is always a real reprieve. */
+function reshuffle(){
+  if (S.over || !S.shuffles) return;
+  startClock();
+  const live = [];
+  for (let i = 0; i < S.W.N; i++) if (S.board[i]) live.push(i);
+  const order = solvable(S.W, live);
+  if (!order){
+    lose('Dödläge.', 'What is left on the table cannot be cleared in any order, ' +
+         'so shuffling it will not help.');
+    return;
+  }
+
+  /* Split what is left into legal pairs before laying it back down.  A
+     word has four cards here, so grouping by word alone gives groups of
+     four; matching takes one from each side, which is why the two sides
+     are always left in equal number. */
+  const svs = new Map(), ens = new Map();
+  live.forEach(i => {
+    const c = S.board[i];
+    const side = c.lang === 'sv' ? svs : ens;
+    if (!side.has(c.pid)) side.set(c.pid, []);
+    side.get(c.pid).push(c);
+  });
+  const pairs = [];
+  svs.forEach((mine, pid) => {
+    const theirs = ens.get(pid) || [];
+    mine.forEach((c, n) => { if (theirs[n]) pairs.push([c, theirs[n]]); });
+  });
+  if (pairs.length !== order.length) return;        /* never seen; never drop a card */
+  shuffle(pairs);
+
+  live.forEach(i => { S.board[i] = null; });
+  order.forEach(([a,b], n) => { S.board[a] = pairs[n][0]; S.board[b] = pairs[n][1]; });
+
+  els.slots.forEach((el, i) => {
+    if (!S.board[i]) return;
+    el.className = 'card ' + S.board[i].lang;
+    el.innerHTML = cardHTML(S.board[i]);
+    const f = els.fit || { cw: 90, lines: 1, fs: 15 };
+    fitWord(el, f.cw, f.lines, f.fs);
+  });
+
+  S.shuffles--;
+  S.score = Math.max(0, S.score - 100);
+  S.sel = null;
+  paint();
+  say('Omblandat. <b>&minus;100</b> &mdash; och det som ligger kvar går att lösa.');
 }
 
 /* ------------------------------------------------------------------
    Hints
 ------------------------------------------------------------------- */
-function freeSlots(){ const out = []; for (let i = 0; i < S.N; i++) if (isFree(i)) out.push(i); return out; }
-
-function findMove(){
-  const fs = freeSlots();
-  for (let a = 0; a < fs.length; a++)
-    for (let b = a+1; b < fs.length; b++)
-      if (matches(S.board[fs[a]], S.board[fs[b]])) return [{zone:'p',i:fs[a]}, {zone:'p',i:fs[b]}];
-  const w = wasteTop();
-  if (w) for (const i of fs) if (matches(S.board[i], w)) return [{zone:'p',i}, {zone:'w'}];
-  return null;
+function spendHint(){
+  S.score = Math.max(0, S.score - 50);
+  S.hints++;
+  if (S.M.hints) S.hintsLeft--;
 }
 
 function hint(){
   if (S.over) return;
+  if (S.M.hints && S.hintsLeft <= 0){ say('Inga tips kvar.'); return; }
   startClock();
+
   if (S.sel){
     const c = cardAt(S.sel);
-    S.score = Math.max(0, S.score - 50);
-    S.hints++;
+    spendHint();
     const el = elOf(S.sel);
     if (el){ el.classList.add('peek'); setTimeout(() => el.classList.remove('peek'), 2200); }
     speak(c.sv);
@@ -1204,14 +1561,15 @@ function hint(){
     say('<b>' + esc(c.sv) + '</b> = ' + esc(c.en) + ' &nbsp;<span style="opacity:.6">(&minus;50)</span>');
     return;
   }
+
   const mv = findMove();
   if (!mv){
-    const has = S.stock.length ? 'Turn the stock' : 'Turn the stock over';
-    say('Nothing on the table pairs up. <b>' + has + '</b> — the deal can always be cleared.');
+    say(S.M.deadly
+      ? 'Nothing pairs up. <b>Blanda om</b> is the only way on.'
+      : 'Nothing on the table pairs up. <b>Turn the stock over</b> &mdash; the deal can always be cleared.');
     return;
   }
-  S.score = Math.max(0, S.score - 50);
-  S.hints++;
+  spendHint();
   paint();
   mv.forEach(s => { const el = elOf(s); if (el){ el.classList.add('hint'); setTimeout(() => el.classList.remove('hint'), 3400); } });
   say('These two belong together. <span style="opacity:.6">(&minus;50)</span>');
@@ -1253,23 +1611,37 @@ setInterval(() => {
   $('s-time').textContent = mmss(S.elapsed);
 }, 1000);
 
-function win(){
+function finish(title, lede, list, head){
   S.over = true;
-  const speedBonus = Math.max(0, 1500 - S.elapsed * 4);
-  S.score += speedBonus;
   paint();
-  $('ov-title').textContent = 'Grattis!';
-  $('ov-lede').innerHTML = 'Pyramiden är tom. Speed bonus <b>+' + speedBonus + '</b>' +
-    (S.wrongs ? ', with ' + S.wrongs + ' wrong ' + (S.wrongs === 1 ? 'pair' : 'pairs') : ', with no wrong pairs') +
-    (S.hints ? ' and ' + S.hints + ' hint' + (S.hints === 1 ? '' : 's') : '') + '.';
+  $('ov-title').textContent  = title;
+  $('ov-lede').innerHTML     = lede;
   $('ov-score').textContent  = S.score;
   $('ov-time').textContent   = mmss(S.elapsed);
   $('ov-streak').textContent = S.best;
-  $('ov-list').innerHTML = S.matched.map(w =>
+  $('ov-listhead').textContent = head;
+  $('ov-list').innerHTML = list.map(w =>
     '<li><span class="sv">' + esc(w[0]) + '</span><span class="en">' + esc(w[1]) + '</span>' +
-    '<button class="say" type="button" data-w="' + esc(w[0]) + '" title="Lyssna">🔊</button></li>'
+    '<button class="say" type="button" data-w="' + esc(w[0]) + '" title="Lyssna">&#128266;</button></li>'
   ).join('');
   $('overlay').hidden = false;
+}
+
+function lose(title, lede){
+  finish(title, lede, remaining(), 'Orden du inte hann');
+}
+
+function win(){
+  S.won = true;
+  const speed  = Math.max(0, 1500 - S.elapsed * 4);
+  const spared = S.lives * 100 + S.shuffles * 150;
+  S.score += speed + spared;
+  finish('Grattis!',
+    'Väggen är tom. Speed bonus <b>+' + speed + '</b>' +
+    (spared ? ', untouched reserves <b>+' + spared + '</b>' : '') +
+    (S.wrongs ? ', with ' + S.wrongs + ' wrong ' + (S.wrongs === 1 ? 'pair' : 'pairs') : ', with no wrong pairs') +
+    (S.hints ? ' and ' + S.hints + ' hint' + (S.hints === 1 ? '' : 's') : '') + '.',
+    S.matched, 'Orden du klarade');
 }
 
 /* ------------------------------------------------------------------
@@ -1278,7 +1650,9 @@ function win(){
 $('b-new').addEventListener('click', newDeal);
 $('b-undo').addEventListener('click', undo);
 $('b-hint').addEventListener('click', hint);
+$('b-shuffle').addEventListener('click', reshuffle);
 $('b-theme').addEventListener('change', newDeal);
+$('b-mode').addEventListener('change', newDeal);
 $('b-sound').addEventListener('click', e => {
   S.sound = !S.sound;
   e.currentTarget.classList.toggle('on', S.sound);
@@ -1301,6 +1675,7 @@ window.addEventListener('resize', () => {
 
 newDeal();
 $('b-sound').classList.add('on');
+
 </script>
 <!--ARTIFACT-END-->
 </body>

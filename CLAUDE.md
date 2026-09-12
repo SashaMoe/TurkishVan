@@ -6,7 +6,7 @@ file and it runs, on the laptop or on the phone.
 
 | Folder | What it is |
 |---|---|
-| `ordpatiens/` | Swedish word solitaire. Pyramid patience where a card is cleared by pairing it with its translation. A1–A2 vocabulary. |
+| `ordpatiens/` | Swedish word solitaire. A wall of cards cleared by pairing each word with its translation, in three modes — one unlosable, one on five lives, one that can dead-lock. A1–A2 vocabulary. |
 
 `CLAUDE.md` stays at the root — a nested copy would stop auto-loading each
 session.
