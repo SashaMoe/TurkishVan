@@ -45,6 +45,13 @@ The published game needs a network and a signed-in Google account.
 
 ## Todo
 
+- [ ] Rebuild the dödläge walls to `LAYOUT.md`'s spec — `tall11` and `wide10` —
+      and check a `[0,0]` row reads as a break in the wall, not as dead space
+- [ ] Fix `buildWall`'s comment. It says a card is covered by "two in the middle
+      of a wide row, one at its ragged edges", which is true of `tall8` and
+      `wide6` and false of any wall whose offsets are whole numbers
+- [ ] Teach `tools/simulate.js` the rest of `LAYOUT.md`'s check table — matches
+      showing, one-move turns, reachable share, longest side-by-side run
 - [ ] Describe what progression should track
 - [ ] Install the Firebase toolchain (node/npm + `firebase-tools`), cleanly
 - [ ] Create the Firebase project, enable Google sign-in

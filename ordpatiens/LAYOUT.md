@@ -8,6 +8,11 @@ This file is what to build instead. Measured against `index.html`'s own
 `buildWall` and `makeDeal`, and against the fifty hand-crafted layouts
 KMahjongg ships, played under its own free rule and dealer.
 
+Those layouts are `layouts/*.layout` in the KMahjongg source and the free
+rule and dealer are `src/gamedata.cpp`, so every number here can be redone
+from scratch. Fetch them from `raw.githubusercontent.com/KDE/kmahjongg/master/`
+— a cloud session can reach that mirror and cannot reach `invent.kde.org`.
+
 ## What a good wall does
 
 Choice is the whole product. A turn is only a decision if more than one
