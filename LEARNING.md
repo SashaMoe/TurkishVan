@@ -64,13 +64,11 @@ Claude does not write the material. Sasha finds it — YouTube, word lists alrea
 on the web — and Claude cuts it into usable pieces and keeps it in one place, so
 that wanting to study does not begin with a search.
 
-**A word list is the same job as the vocabulary page.** `ordpatiens`'s `BANK` is
-already `[swedish, english, class, gender, theme]`, so a list found anywhere gets
-converted into that shape and cut into sets of twenty or thirty. Prefer lists
-that are openly licensed — Språkbanken's Kelly-listan carries CEFR levels, and
-Folkets lexikon is the open Swedish–English dictionary. **Both licences want
-checking before anything is copied in**, and a list with no clear licence is
-linked rather than copied.
+**A word list is the same job as the vocabulary page.** Sasha supplies the list;
+Claude does not go looking for one. `ordpatiens`'s `BANK` is already
+`[swedish, english, class, gender, theme]`, so whatever she hands over gets
+converted into that shape and cut into sets of twenty or thirty. A list whose
+licence is unclear is linked rather than copied into the repo.
 
 **A video is half the job, because Claude cannot watch one.** What it can keep is
 the link, the title, the length, the channel and whatever Sasha said about it
