@@ -18,10 +18,6 @@ The piece no app does, and it is wider than essays. The sentence she wanted to
 say today and couldn't is written down and corrected the same way, which is how
 speaking gets rehearsed in text.
 
-The correction has levels, and she picks one when she asks: hard errors only;
-errors plus a more idiomatic phrasing; or a line-by-line rewrite with a reason
-for every change.
-
 ## Vocabulary — a web page
 
 TurkishVan becomes a small vocabulary site. `ordpatiens/` is the first thing in
