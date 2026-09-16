@@ -67,8 +67,7 @@ that wanting to study does not begin with a search.
 **A word list is the same job as the vocabulary page.** Sasha supplies the list;
 Claude does not go looking for one. `ordpatiens`'s `BANK` is already
 `[swedish, english, class, gender, theme]`, so whatever she hands over gets
-converted into that shape and cut into sets of twenty or thirty. A list whose
-licence is unclear is linked rather than copied into the repo.
+converted into that shape and cut into sets of twenty or thirty.
 
 **A video is half the job, because Claude cannot watch one.** What it can keep is
 the link, the title, the length, the channel and whatever Sasha said about it
