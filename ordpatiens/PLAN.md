@@ -8,14 +8,16 @@ Two tracks, on purpose:
 
 - **Now — Claude artifact.** Good enough for demos and testing while the game is
   still changing. One page, sandboxed, no setup.
-- **Later — GitHub Pages.** The real home, once there is enough here to be worth
-  publishing. `SashaMoe/TurkishVan` is public, so Pages is free.
+- **Later — Cloudflare Pages.** The real home, once there is enough here to be
+  worth publishing. Its free tier is the better one, and it does not care whether
+  the repo is public — which GitHub Pages did, and which is the only reason
+  `SashaMoe/TurkishVan` is public today.
 
 ## Stack
 
 | Layer | Choice |
 |---|---|
-| Hosting | GitHub Pages |
+| Hosting | Cloudflare Pages |
 | Database | Cloud Firestore, called straight from the browser |
 | Identity | Firebase Auth, Sign in with Google |
 | Audio | Plain files committed to the repo |
@@ -40,8 +42,8 @@ The published game needs a network and a signed-in Google account.
   comes before any Firebase work.
 - **Audio in the artifact.** The artifact sandbox blocks external media, so every
   sound has to be inlined into the page and counts against a 16 MB cap. A small
-  set of effects is fine; a full pronunciation library is not. The GitHub Pages
-  build has no such limit.
+  set of effects is fine; a full pronunciation library is not. The Cloudflare
+  Pages build has no such limit.
 
 ## Todo
 
@@ -56,6 +58,8 @@ The published game needs a network and a signed-in Google account.
 - [ ] Install the Firebase toolchain (node/npm + `firebase-tools`), cleanly
 - [ ] Create the Firebase project, enable Google sign-in
 - [ ] Keep `firestore.rules` in this folder as the source of truth
-- [ ] Enable GitHub Pages on the repo
+- [ ] Put `SashaMoe/TurkishVan` back to private — it was only made public to get
+      GitHub Pages for free, and that is no longer the plan
+- [ ] Set the site up on Cloudflare Pages
 - [ ] Update the "open the file and it runs" line in the root `CLAUDE.md` — it is
       still accurate today, and stops being true when Firebase lands

@@ -57,3 +57,26 @@ What is missing is **state**. What makes a vocabulary app work is that it
 remembers which word was wrong yesterday, and a conversation does not survive
 between sessions — only a file in this repo does. `ordpatiens/PLAN.md` has the
 same hole open under "Describe what progression should track".
+
+## Keeping the material — a catalogue
+
+Claude does not write the material. Sasha finds it — YouTube, word lists already
+on the web — and Claude cuts it into usable pieces and keeps it in one place, so
+that wanting to study does not begin with a search.
+
+**A word list is the same job as the vocabulary page.** `ordpatiens`'s `BANK` is
+already `[swedish, english, class, gender, theme]`, so a list found anywhere gets
+converted into that shape and cut into sets of twenty or thirty. Prefer lists
+that are openly licensed — Språkbanken's Kelly-listan carries CEFR levels, and
+Folkets lexikon is the open Swedish–English dictionary. **Both licences want
+checking before anything is copied in**, and a list with no clear licence is
+linked rather than copied.
+
+**A video is half the job, because Claude cannot watch one.** What it can keep is
+the link, the title, the length, the channel and whatever Sasha said about it
+afterwards — which is already enough to end the searching. A video carrying its
+own chapters can be cut by them, chapter titles being text. Pulling auto-captions
+with `yt-dlp` would allow cutting by content, and may simply not work.
+
+The catalogue does not belong on the Whiskerbase board. That board holds things
+to do; this is material to reach for, and mixing the two spoils both.
