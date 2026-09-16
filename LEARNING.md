@@ -18,6 +18,26 @@ The piece no app does, and it is wider than essays. The sentence she wanted to
 say today and couldn't is written down and corrected the same way, which is how
 speaking gets rehearsed in text.
 
+## Subtitles and transcription — parked
+
+Not being done now. Written down so the groundwork is not worked out twice.
+
+Two halves of one job: material that already has Swedish subtitles gets
+translated into a bilingual `.srt`; material without them has to be transcribed
+first. Claude does the translating and none of the hearing.
+
+Transcription would run through **KB-Whisper**, the Swedish National Library's
+Whisper fine-tune — on HuggingFace under `KBLab/`, and better on Swedish than
+the original. The exact model name is unverified. It writes timed `.srt`
+directly, so the chain is audio → KB-Whisper → Swedish `.srt` → translation →
+bilingual `.srt`. It runs on Sasha's own machine, not in a cloud session: the
+weights are a couple of GB and the audio would have to be uploaded first.
+
+Two things make it worth less than it sounds. Whisper invents lines over silence
+and music, and a confidently wrong line is worse for a learner than a missing
+one. And SVT Play's player cannot load an external subtitle file, so a bilingual
+`.srt` is only usable against a local copy of the video.
+
 ## Conversation — ruled out
 
 Claude Code has no audio path: it cannot hear her and cannot speak, so a spoken
