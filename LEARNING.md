@@ -18,6 +18,15 @@ The piece no app does, and it is wider than essays. The sentence she wanted to
 say today and couldn't is written down and corrected the same way, which is how
 speaking gets rehearsed in text.
 
+## Conversation — ruled out
+
+Claude Code has no audio path: it cannot hear her and cannot speak, so a spoken
+conversation is not something to build here. The Claude app's voice mode can
+hold one, but it reaches none of this and still has no ear for pronunciation — a
+vowel held too short, a mangled `sj-`, a flat sentence melody all go past it.
+That correction comes from people. Written down because it removes a whole
+direction, not because it is a task.
+
 ## Vocabulary — a web page
 
 TurkishVan becomes a small vocabulary site. `ordpatiens/` is the first thing in
